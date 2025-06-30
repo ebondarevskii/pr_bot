@@ -8,8 +8,6 @@ A Telegram Mini App built with React, TypeScript, and Privy for smart wallet aut
 - 💰 **Pimlico Smart Accounts**: Custom account abstraction with Pimlico
 - 💰 **Transaction Support**: Sign messages and send transactions
 - 📱 **Telegram Integration**: Native Telegram Mini App support
-- 🎨 **Modern UI**: Clean and responsive design
-- 🔒 **Security**: Secure authentication and data handling
 
 ## Tech Stack
 

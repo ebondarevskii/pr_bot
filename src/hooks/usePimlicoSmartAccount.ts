@@ -1,11 +1,11 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useWallets } from '@privy-io/react-auth';
-import { createWalletClient, custom, http, getAddress, type Hex } from 'viem';
+import { createWalletClient, custom, http } from 'viem';
 import { polygon } from 'viem/chains';
 import { createPublicClient } from 'viem';
 import { createSmartAccountClient } from 'permissionless';
 import { toKernelSmartAccount } from 'permissionless/accounts';
-import { entryPoint07Address, type UserOperation } from 'viem/account-abstraction';
+import { entryPoint07Address } from 'viem/account-abstraction';
 import { pimlicoService, type PimlicoSmartAccount } from '@/services/pimlico';
 import { USDC_CONTRACT_ADDRESS } from '@/utils/constants';
 import { parseAbi } from 'viem';
@@ -259,9 +259,7 @@ export const usePimlicoSmartAccount = () => {
     }
   }, [smartAccount]);
 
-  const estimateTransactionCost = useCallback(async (
-    transaction: { to: string; value?: bigint; data?: string }
-  ): Promise<{ estimatedGas: bigint; gasPrice: bigint; totalCost: bigint } | null> => {
+  const estimateTransactionCost = useCallback(async (): Promise<{ estimatedGas: bigint; gasPrice: bigint; totalCost: bigint } | null> => {
     if (!smartAccount?.client) {
       setError('Smart account not available');
       return null;

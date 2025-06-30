@@ -5,7 +5,7 @@ import { useTelegram } from '@/hooks/useTelegram';
 
 export const LoginButton: React.FC = () => {
   const { login, isLoading, error } = usePrivyAuth();
-  const { user: telegramUser, isValid } = useTelegram();
+  const { user: telegramUser } = useTelegram();
 
   const handleLogin = async () => {
     const user = await login();

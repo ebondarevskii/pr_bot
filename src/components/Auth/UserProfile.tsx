@@ -1,13 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import { User } from '@privy-io/react-auth';
-import { Button } from '@/components/UI/Button';
-import { Card } from '@/components/UI/Card';
-import { usePimlicoSmartAccount } from '@/hooks/usePimlicoSmartAccount';
-import { useSmartAccountLink } from '@/hooks/useSmartAccountLink';
-import { privyService } from '@/services/privy';
-import { USDC_CONTRACT_ADDRESS } from '@/utils/constants';
-import { generateERC20TransferData } from '@/utils/security';
-import { isSmartAccountLinked, getLinkedSmartAccount } from '@/utils/smartAccount';
+import React, { useState, useEffect } from "react";
+import { User } from "@privy-io/react-auth";
+import { Button } from "@/components/UI/CustomButton";
+import { Card } from "@/components/UI/Card";
+import { usePimlicoSmartAccount } from "@/hooks/usePimlicoSmartAccount";
+import { useSmartAccountLink } from "@/hooks/useSmartAccountLink";
+import { privyService } from "@/services/privy";
+import { USDC_CONTRACT_ADDRESS } from "@/utils/constants";
+import { generateERC20TransferData } from "@/utils/security";
+import {
+  isSmartAccountLinked,
+  getLinkedSmartAccount,
+} from "@/utils/smartAccount";
 
 interface UserProfileProps {
   user: User;
@@ -21,10 +24,10 @@ interface ClickableAddressProps {
   showFull?: boolean;
 }
 
-const ClickableAddress: React.FC<ClickableAddressProps> = ({ 
-  address, 
+const ClickableAddress: React.FC<ClickableAddressProps> = ({
+  address,
   className = "text-sm text-gray-500 font-mono",
-  showFull = false 
+  showFull = false,
 }) => {
   const [copied, setCopied] = useState(false);
 
@@ -34,11 +37,13 @@ const ClickableAddress: React.FC<ClickableAddressProps> = ({
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch (err) {
-      console.error('Failed to copy address:', err);
+      console.error("Failed to copy address:", err);
     }
   };
 
-  const displayAddress = showFull ? address : privyService.formatAddress(address);
+  const displayAddress = showFull
+    ? address
+    : privyService.formatAddress(address);
 
   return (
     <button
@@ -48,31 +53,25 @@ const ClickableAddress: React.FC<ClickableAddressProps> = ({
     >
       {displayAddress}
       <span className="ml-2 text-xs opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-        {copied ? '✅ Copied!' : '📋 Copy'}
+        {copied ? "✅ Copied!" : "📋 Copy"}
       </span>
     </button>
   );
 };
 
-export const UserProfile: React.FC<UserProfileProps> = ({
-  user,
-}) => {
-  const { 
-    smartAccount, 
-    sendTransaction, 
-    signMessage, 
+export const UserProfile: React.FC<UserProfileProps> = ({ user }) => {
+  const {
+    smartAccount,
+    sendTransaction,
+    signMessage,
     getUserOperationGasPrice,
     getUSDCBalance,
-    isLoading: smartAccountLoading, 
-    error: smartAccountError 
+    isLoading: smartAccountLoading,
+    error: smartAccountError,
   } = usePimlicoSmartAccount();
-  
-  const {
-    linkSmartAccount,
-    isLinking,
-    linkError,
-    resetLinkState
-  } = useSmartAccountLink();
+
+  const { linkSmartAccount, isLinking, linkError, resetLinkState } =
+    useSmartAccountLink();
 
   const [signature, setSignature] = useState<string | null>(null);
   const [txHash, setTxHash] = useState<string | null>(null);
@@ -103,7 +102,7 @@ export const UserProfile: React.FC<UserProfileProps> = ({
 
   const handleLinkSmartAccount = async () => {
     if (!smartAccount) return;
-    
+
     const success = await linkSmartAccount(smartAccount);
     if (success) {
       // Optionally refresh the page or update user state
@@ -114,7 +113,7 @@ export const UserProfile: React.FC<UserProfileProps> = ({
   const handleSignMessage = async () => {
     setIsSigning(true);
     try {
-      const sig = await signMessage('Hello from Pimlico Smart Account!');
+      const sig = await signMessage("Hello from Pimlico Smart Account!");
       setSignature(sig);
     } finally {
       setIsSigning(false);
@@ -147,27 +146,35 @@ export const UserProfile: React.FC<UserProfileProps> = ({
       // Check USDC balance first
       const balance = await getUSDCBalance();
       if (!balance || balance < BigInt(100000)) {
-        throw new Error('Insufficient USDC balance. Need at least 0.01 USDC for transfer and gas fees.');
+        throw new Error(
+          "Insufficient USDC balance. Need at least 0.01 USDC for transfer and gas fees."
+        );
       }
 
       // 0.01 USDC = 10000 (USDC has 6 decimals)
       const usdcAmount = BigInt(10000);
-      const recipientAddress = '0xb6dd6a7c56c157f206c6cf9ec5c10ba93f4262da';
-      
+      const recipientAddress = "0xb6dd6a7c56c157f206c6cf9ec5c10ba93f4262da";
+
       // Generate ERC-20 transfer data
-      const transferData = generateERC20TransferData(recipientAddress, usdcAmount);
-      console.log('transferData', transferData)
-      
+      const transferData = generateERC20TransferData(
+        recipientAddress,
+        usdcAmount
+      );
+      console.log("transferData", transferData);
+
       // Send as sponsored transaction using USDC for gas fees
-      const hash = await sendTransaction({
-        to: USDC_CONTRACT_ADDRESS,
-        data: transferData,
-      }, {
-        useSponsoredTx: true,
-        tokenAddress: USDC_CONTRACT_ADDRESS
-      });
+      const hash = await sendTransaction(
+        {
+          to: USDC_CONTRACT_ADDRESS,
+          data: transferData,
+        },
+        {
+          useSponsoredTx: true,
+          tokenAddress: USDC_CONTRACT_ADDRESS,
+        }
+      );
       setTxHash(hash);
-      
+
       setTimeout(() => {
         handleCheckUSDCBalance();
       }, 2000);
@@ -185,25 +192,31 @@ export const UserProfile: React.FC<UserProfileProps> = ({
           </div>
           <div className="flex-1">
             <h2 className="text-xl font-semibold">
-              {user.email?.address || 'Anonymous User'}
+              {user.email?.address || "Anonymous User"}
             </h2>
             <p className="text-gray-600">Privy User</p>
             {smartAccount && (
               <div className="mt-2">
-                <p className="text-sm text-gray-500 mb-1">Pimlico Smart Account:</p>
-                <ClickableAddress 
-                  address={smartAccount.address} 
+                <p className="text-sm text-gray-500 mb-1">
+                  Pimlico Smart Account:
+                </p>
+                <ClickableAddress
+                  address={smartAccount.address}
                   className="text-sm text-gray-500 font-mono"
                 />
               </div>
             )}
             {linkedSmartAccount && (
               <div className="mt-2">
-                <p className="text-sm text-green-600 mb-1">✅ Linked Smart Account:</p>
-                <ClickableAddress 
-                  address={'address' in linkedSmartAccount && linkedSmartAccount.address 
-                    ? linkedSmartAccount.address 
-                    : ''
+                <p className="text-sm text-green-600 mb-1">
+                  ✅ Linked Smart Account:
+                </p>
+                <ClickableAddress
+                  address={
+                    "address" in linkedSmartAccount &&
+                    linkedSmartAccount.address
+                      ? linkedSmartAccount.address
+                      : ""
                   }
                   className="text-sm text-green-600 font-mono"
                 />
@@ -225,7 +238,9 @@ export const UserProfile: React.FC<UserProfileProps> = ({
       {smartAccountError && (
         <Card>
           <div className="bg-red-50 border border-red-200 rounded-lg p-3">
-            <p className="text-red-600 text-sm font-medium">Smart Account Error</p>
+            <p className="text-red-600 text-sm font-medium">
+              Smart Account Error
+            </p>
             <p className="text-red-600 text-xs">{smartAccountError}</p>
           </div>
         </Card>
@@ -235,7 +250,8 @@ export const UserProfile: React.FC<UserProfileProps> = ({
         <Card>
           <h3 className="text-lg font-medium mb-4">Link Smart Account</h3>
           <p className="text-gray-600 text-sm mb-4">
-            Link your smart account to your Privy profile to make it available across sessions.
+            Link your smart account to your Privy profile to make it available
+            across sessions.
           </p>
           <Button
             onClick={handleLinkSmartAccount}
@@ -243,7 +259,7 @@ export const UserProfile: React.FC<UserProfileProps> = ({
             className="w-full"
             variant="primary"
           >
-            {isLinking ? 'Linking...' : 'Link Smart Account'}
+            {isLinking ? "Linking..." : "Link Smart Account"}
           </Button>
           {linkError && (
             <div className="mt-3 bg-red-50 border border-red-200 rounded-lg p-3">
@@ -256,7 +272,9 @@ export const UserProfile: React.FC<UserProfileProps> = ({
 
       {smartAccount && (
         <Card>
-          <h3 className="text-lg font-medium mb-4">Pimlico Smart Account Actions</h3>
+          <h3 className="text-lg font-medium mb-4">
+            Pimlico Smart Account Actions
+          </h3>
           <div className="space-y-3">
             <Button
               onClick={handleSignMessage}
@@ -266,7 +284,7 @@ export const UserProfile: React.FC<UserProfileProps> = ({
             >
               Sign Message
             </Button>
-            
+
             <Button
               onClick={handleSendTransaction}
               loading={isSending}
@@ -296,9 +314,11 @@ export const UserProfile: React.FC<UserProfileProps> = ({
 
             {signature && (
               <div className="bg-green-50 border border-green-200 rounded-lg p-3">
-                <p className="text-green-600 text-sm font-medium">Message Signed!</p>
-                <ClickableAddress 
-                  address={signature} 
+                <p className="text-green-600 text-sm font-medium">
+                  Message Signed!
+                </p>
+                <ClickableAddress
+                  address={signature}
                   className="text-green-600 text-xs font-mono break-all"
                   showFull={true}
                 />
@@ -307,10 +327,14 @@ export const UserProfile: React.FC<UserProfileProps> = ({
 
             {txHash && (
               <div className="bg-green-50 border border-green-200 rounded-lg p-3">
-                <p className="text-green-600 text-sm font-medium">Sponsored USDC Transfer Sent!</p>
-                <p className="text-green-600 text-xs mb-2">Gas fees paid with USDC</p>
-                <ClickableAddress 
-                  address={txHash} 
+                <p className="text-green-600 text-sm font-medium">
+                  Sponsored USDC Transfer Sent!
+                </p>
+                <p className="text-green-600 text-xs mb-2">
+                  Gas fees paid with USDC
+                </p>
+                <ClickableAddress
+                  address={txHash}
                   className="text-green-600 text-xs font-mono break-all"
                   showFull={true}
                 />
@@ -319,22 +343,30 @@ export const UserProfile: React.FC<UserProfileProps> = ({
 
             {gasPrice && (
               <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
-                <p className="text-blue-600 text-sm font-medium mb-2">Pimlico Gas Prices</p>
+                <p className="text-blue-600 text-sm font-medium mb-2">
+                  Pimlico Gas Prices
+                </p>
                 <div className="space-y-2">
                   <div className="flex justify-between items-center">
-                    <span className="text-blue-600 text-xs font-medium">Slow:</span>
+                    <span className="text-blue-600 text-xs font-medium">
+                      Slow:
+                    </span>
                     <span className="text-blue-600 text-xs">
                       {Number(gasPrice.slow.maxFeePerGas) / 1e9} Gwei
                     </span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-blue-600 text-xs font-medium">Standard:</span>
+                    <span className="text-blue-600 text-xs font-medium">
+                      Standard:
+                    </span>
                     <span className="text-blue-600 text-xs">
                       {Number(gasPrice.standard.maxFeePerGas) / 1e9} Gwei
                     </span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-blue-600 text-xs font-medium">Fast:</span>
+                    <span className="text-blue-600 text-xs font-medium">
+                      Fast:
+                    </span>
                     <span className="text-blue-600 text-xs">
                       {Number(gasPrice.fast.maxFeePerGas) / 1e9} Gwei
                     </span>
@@ -345,9 +377,13 @@ export const UserProfile: React.FC<UserProfileProps> = ({
 
             {usdcBalance !== null && (
               <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
-                <p className="text-blue-600 text-sm font-medium mb-2">USDC Balance</p>
+                <p className="text-blue-600 text-sm font-medium mb-2">
+                  USDC Balance
+                </p>
                 <div className="flex justify-between items-center">
-                  <span className="text-blue-600 text-xs font-medium">Smart Account:</span>
+                  <span className="text-blue-600 text-xs font-medium">
+                    Smart Account:
+                  </span>
                   <span className="text-blue-600 text-xs">
                     {Number(usdcBalance) / 1_000_000} USDC
                   </span>
@@ -365,28 +401,33 @@ export const UserProfile: React.FC<UserProfileProps> = ({
             {user.linkedAccounts.map((account, index) => (
               <div key={index} className="flex items-center justify-between">
                 <span className="text-gray-700 capitalize">
-                  {account.type.replace('_', ' ')}
-                  {'walletClientType' in account && account.walletClientType && (
-                    <span className="text-xs text-gray-500 ml-2">
-                      ({account.walletClientType})
-                    </span>
-                  )}
+                  {account.type.replace("_", " ")}
+                  {"walletClientType" in account &&
+                    account.walletClientType && (
+                      <span className="text-xs text-gray-500 ml-2">
+                        ({account.walletClientType})
+                      </span>
+                    )}
                 </span>
                 <span className="text-sm text-gray-500">
-                  {account.type === 'telegram' && (
+                  {account.type === "telegram" && (
                     <span>
                       {account.username || `ID: ${account.telegramUserId}`}
                     </span>
                   )}
-                  {account.type === 'email' && user.email?.address && (
+                  {account.type === "email" && user.email?.address && (
                     <span>{user.email.address}</span>
                   )}
-                  {account.type === 'wallet' && 'address' in account && account.address && (
-                    <ClickableAddress address={account.address} />
-                  )}
-                  {account.type === 'smart_wallet' && 'address' in account && account.address && (
-                    <ClickableAddress address={account.address} />
-                  )}
+                  {account.type === "wallet" &&
+                    "address" in account &&
+                    account.address && (
+                      <ClickableAddress address={account.address} />
+                    )}
+                  {account.type === "smart_wallet" &&
+                    "address" in account &&
+                    account.address && (
+                      <ClickableAddress address={account.address} />
+                    )}
                 </span>
               </div>
             ))}

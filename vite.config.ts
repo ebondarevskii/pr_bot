@@ -14,7 +14,7 @@ export default defineConfig({
     hmr: {
       clientPort: 80,
     },
-    allowedHosts: ['mighty-hugely-boxer.ngrok-free.app', 'localhost'],
+    allowedHosts: ['mighty-hugely-boxer.ngrok-free.app', 'splendid-glorious-boar.ngrok-free.app', 'localhost'],
   },
   build: {
     outDir: 'dist',

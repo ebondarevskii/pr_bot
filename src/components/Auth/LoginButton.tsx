@@ -1,7 +1,7 @@
-import React from 'react';
-import { Button } from '@/components/UI/Button';
-import { usePrivyAuth } from '@/hooks/usePrivyAuth';
-import { useTelegram } from '@/hooks/useTelegram';
+import React from "react";
+import { Button } from "@/components/UI/CustomButton";
+import { usePrivyAuth } from "@/hooks/usePrivyAuth";
+import { useTelegram } from "@/hooks/useTelegram";
 
 export const LoginButton: React.FC = () => {
   const { login, isLoading, error } = usePrivyAuth();
@@ -10,7 +10,7 @@ export const LoginButton: React.FC = () => {
   const handleLogin = async () => {
     const user = await login();
     if (user) {
-      console.log('Successfully logged in with Privy:', user);
+      console.log("Successfully logged in with Privy:", user);
     }
   };
 
@@ -23,12 +23,8 @@ export const LoginButton: React.FC = () => {
         </p>
       </div>
 
-      <Button
-        onClick={handleLogin}
-        loading={isLoading}
-        className="w-full"
-      >
-        {isLoading ? 'Connecting...' : 'Connect with Privy'}
+      <Button onClick={handleLogin} loading={isLoading} className="w-full">
+        {isLoading ? "Connecting..." : "Connect with Privy"}
       </Button>
 
       {error && (

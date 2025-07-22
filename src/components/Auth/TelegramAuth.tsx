@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { usePrivy } from '@privy-io/react-auth';
-import { retrieveLaunchParams, isTMA } from '@telegram-apps/bridge';
+import React, { useEffect, useState } from "react";
+import { usePrivy } from "@privy-io/react-auth";
+import { retrieveLaunchParams, isTMA } from "@telegram-apps/bridge";
 
 interface TelegramAuthProps {
   children: React.ReactNode;
 }
 
 export const TelegramAuth: React.FC<TelegramAuthProps> = ({ children }) => {
-  const { authenticated, ready, linkTelegram, login } = usePrivy();
+  const { authenticated, ready, linkTelegram, login, logout } = usePrivy();
   const [hasLinked, setHasLinked] = useState(false);
   const [isMiniApp, setIsMiniApp] = useState(false);
 
@@ -25,6 +25,7 @@ export const TelegramAuth: React.FC<TelegramAuthProps> = ({ children }) => {
   }, []);
 
   useEffect(() => {
+    logout();
     if (ready && isMiniApp && !authenticated && !hasLinked) {
       setHasLinked(true);
       try {
@@ -68,4 +69,4 @@ export const TelegramAuth: React.FC<TelegramAuthProps> = ({ children }) => {
   }
 
   return <>{children}</>;
-}; 
+};

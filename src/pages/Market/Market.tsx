@@ -21,6 +21,8 @@ export const Market = () => {
               volume={item.volume}
               imageUrl={item.logo}
               choices={item.choises!}
+              id={item.id}
+              key={item.id}
             />
           );
         }
@@ -29,6 +31,8 @@ export const Market = () => {
             name={item.title}
             volume={item.volume}
             imageUrl={item.logo}
+            id={item.id}
+            key={item.id}
           />
         );
       })}

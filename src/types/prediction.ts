@@ -1,4 +1,5 @@
 export type Prediction = {
+  id: string;
   logo: string;
   title: string;
   chances: number;

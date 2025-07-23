@@ -96,6 +96,7 @@ export const TONWalletConnect: React.FC = () => {
       };
 
       const result = await tonConnectUI.sendTransaction(transaction);
+
       setTxHash(result.boc || "Transaction sent successfully");
       setRecipientAddress("");
       setAmount("");

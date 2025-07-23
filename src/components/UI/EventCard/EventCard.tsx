@@ -1,12 +1,20 @@
+import { useNavigate } from "react-router-dom";
 import { Button } from "../CustomButton";
 
 interface Props {
   name: string;
   volume: string;
   imageUrl: string;
+  id: string;
 }
 
-export const EventCard: React.FC<Props> = ({ name, volume, imageUrl }) => {
+export const EventCard: React.FC<Props> = ({ name, volume, imageUrl, id }) => {
+  const navigate = useNavigate();
+
+  const goToPrediction = () => {
+    navigate(`/prediction/${id}`);
+  };
+
   return (
     <div
       data-card-content="true"
@@ -14,6 +22,7 @@ export const EventCard: React.FC<Props> = ({ name, volume, imageUrl }) => {
       data-card-header="true"
       data-variants="Variant2"
       className="w-full mb-1.5 self-stretch h-40 py-6 bg-base-card rounded-2xl border border-[#E5E5E5] inline-flex flex-col justify-start items-start gap-6 overflow-hidden"
+      onClick={goToPrediction}
     >
       <div className="self-stretch px-6 inline-flex justify-start items-start gap-2">
         <div className="flex-1 inline-flex flex-col justify-start items-start gap-1.5">

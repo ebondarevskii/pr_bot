@@ -6,11 +6,7 @@ import { TonConnectUIProvider } from "@tonconnect/ui-react";
 // import { TelegramAuth } from "@/components/Auth/TelegramAuth";
 
 import "./styles/global.css";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { Market } from "./pages/Market";
-import { Navbar } from "./components/UI/Navbar";
-import { Portfolio } from "./pages/Portfolio";
-import { Rewards } from "./pages/Rewards";
+import { AppRoutes } from "./AppRoutes";
 
 const App: React.FC = () => {
   const { authenticated, user, logout, ready } = usePrivy();
@@ -41,14 +37,7 @@ const App: React.FC = () => {
   return (
     <TonConnectUIProvider manifestUrl={manifestUrl}>
       {/* <MainLayout user={user!} onLogout={logout} /> */}
-      <Router>
-        <Routes>
-          <Route path="/" element={<Market />} />
-          <Route path="/portfolio" element={<Portfolio />} />
-          <Route path="/rewards" element={<Rewards />} />
-        </Routes>
-        <Navbar />
-      </Router>
+      <AppRoutes />
     </TonConnectUIProvider>
   );
 };

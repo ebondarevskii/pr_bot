@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { Choice } from "@/types/event";
 import { ChoiceItem } from "./ChoiceItem";
@@ -9,6 +10,7 @@ interface Props {
   volume: string;
   imageUrl: string;
   choices: Choice[];
+  id: string;
 }
 
 export const MultichoiceEventCard: React.FC<Props> = ({
@@ -16,11 +18,18 @@ export const MultichoiceEventCard: React.FC<Props> = ({
   volume,
   imageUrl,
   choices,
+  id,
 }) => {
+  const navigate = useNavigate();
+
   const [isViewAll, setIsViewAll] = useState(false);
 
   const onClickViewAll = () => {
     setIsViewAll((prev) => !prev);
+  };
+
+  const goToPrediction = () => {
+    navigate(`/prediction/${id}`);
   };
 
   const isMoreThan3Choices = choices.length > 3;
@@ -43,6 +52,7 @@ export const MultichoiceEventCard: React.FC<Props> = ({
       data-card-header="true"
       data-variants="Default"
       className="w-full mb-1.5 self-stretch py-6 px-6 bg-base-card rounded-2xl border border-[#E5E5E5] inline-flex flex-col justify-start items-start gap-6 overflow-hidden"
+      onClick={goToPrediction}
     >
       <div className="self-stretch inline-flex justify-start items-start gap-2">
         <div className="flex-1 inline-flex flex-col justify-start items-start gap-1.5">

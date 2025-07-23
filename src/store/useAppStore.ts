@@ -5,10 +5,12 @@ interface AppState {
   isLoading: boolean;
   predictions: Prediction[];
   userPredictions: Prediction[];
+  setPredictions: (data: Prediction[]) => void;
 }
 
 const predictionsMock: Prediction[] = [
   {
+    id: "1",
     title: "New York City Mayoral election or it will be not so good?",
     volume: "14M",
     logo: "https://picsum.photos/200/300",
@@ -21,6 +23,7 @@ const predictionsMock: Prediction[] = [
     daysLeft: 13,
   },
   {
+    id: "2",
     title: "New York City Mayoral election or it will be not so good?",
     volume: "14M",
     logo: "https://picsum.photos/200/300",

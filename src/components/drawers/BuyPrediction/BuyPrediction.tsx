@@ -1,8 +1,8 @@
 import { Drawer, DrawerContent, DrawerTrigger } from "../drawer";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "../tabs";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../UI/tabs";
 
 import { useState } from "react";
-import { Button, buttonVariants } from "../button";
+import { Button, buttonVariants } from "../../UI/button";
 import { Minus as MinusIcon } from "@/components/icons/Minus";
 import { Plus as PlusIcon } from "@/components/icons/Plus";
 import { getFiatAmountCorrect } from "@/lib/number";

@@ -1,16 +1,27 @@
 import { Drawer, DrawerContent, DrawerTrigger } from "../drawer";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "../tabs";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../UI/tabs";
 
 import { useState } from "react";
-import { Button } from "../button";
+import { toNano } from "@ton/core";
+
+import { Button } from "@/components/UI/Button";
 import { Minus as MinusIcon } from "@/components/icons/Minus";
 import { Plus as PlusIcon } from "@/components/icons/Plus";
 import { getFiatAmountCorrect } from "@/lib/number";
 import { cn } from "@/lib/utils";
 import { Lock as LockIcon } from "@/components/icons/Lock";
+import { useBridgeTonToPolygon } from "@/hooks/useBridgeTonToPolygon";
+import { useAppStore } from "@/store/useAppStore";
 
 export const TopUp = () => {
+  const [open, setOpen] = useState<boolean>(false);
+
+  const polygonAddress = useAppStore((state) => state.polygonAddress);
+  const tonAddress = useAppStore((state) => state.tonAddress);
+
   const [amount, setAmount] = useState<number>(0);
+
+  const { sendTransaction, isLoading: isTxLoading } = useBridgeTonToPolygon();
 
   const onClickMinus = () => {
     setAmount((prev) => {
@@ -28,8 +39,18 @@ export const TopUp = () => {
     });
   };
 
+  const sendTopupTransaction = async () => {
+    sendTransaction({
+      tonAddressFrom: tonAddress,
+      polygonAddressTo: polygonAddress,
+      amountIn: toNano(amount),
+    });
+
+    setOpen(false);
+  };
+
   return (
-    <Drawer>
+    <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
         <Button variant="default" className="w-full mb-2">
           Add funds
@@ -91,7 +112,13 @@ export const TopUp = () => {
               <TabsTrigger value="credit_card">Credit card</TabsTrigger>
             </TabsList>
             <TabsContent value="ton_space">
-              <Button className="w-full">Top up</Button>
+              <Button
+                className="w-full"
+                onClick={sendTopupTransaction}
+                disabled={isTxLoading}
+              >
+                Top up
+              </Button>
             </TabsContent>
             <TabsContent value="stars">
               <Button className="w-full flex gap-[8px] justify-center">
@@ -100,7 +127,10 @@ export const TopUp = () => {
               </Button>
             </TabsContent>
             <TabsContent value="credit_card">
-              <Button className="w-full">Top up</Button>
+              <Button className="w-full flex gap-[8px] justify-center">
+                <LockIcon />
+                Coming soon
+              </Button>
             </TabsContent>
           </Tabs>
         </div>

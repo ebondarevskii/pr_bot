@@ -1,11 +1,17 @@
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import { NodeGlobalsPolyfillPlugin } from "@esbuild-plugins/node-globals-polyfill";
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    react(),
+    NodeGlobalsPolyfillPlugin({
+      buffer: true,
+    }),
+  ],
   resolve: {
     alias: {
-      '@': '/src',
+      "@": "/src",
     },
   },
   server: {
@@ -14,10 +20,14 @@ export default defineConfig({
     hmr: {
       clientPort: 80,
     },
-    allowedHosts: ['mighty-hugely-boxer.ngrok-free.app', 'splendid-glorious-boar.ngrok-free.app', 'localhost'],
+    allowedHosts: [
+      "mighty-hugely-boxer.ngrok-free.app",
+      "splendid-glorious-boar.ngrok-free.app",
+      "localhost",
+    ],
   },
   build: {
-    outDir: 'dist',
+    outDir: "dist",
     sourcemap: true,
   },
-})
+});

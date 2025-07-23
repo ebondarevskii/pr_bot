@@ -1,9 +1,9 @@
 import React from "react";
 import { usePrivy } from "@privy-io/react-auth";
 import { TonConnectUIProvider } from "@tonconnect/ui-react";
-// import { LoginButton } from "@/components/Auth/LoginButton";
+import { LoginButton } from "@/components/Auth/LoginButton";
 // import { MainLayout } from "@/components/Layout/MainLayout";
-// import { TelegramAuth } from "@/components/Auth/TelegramAuth";
+import { TelegramAuth } from "@/components/Auth/TelegramAuth";
 
 import "./styles/global.css";
 import { AppRoutes } from "./AppRoutes";
@@ -24,15 +24,15 @@ const App: React.FC = () => {
     );
   }
 
-  // if (!authenticated || !user) {
-  //   return (
-  //     <TonConnectUIProvider manifestUrl={manifestUrl}>
-  //       <TelegramAuth>
-  //         <LoginButton />
-  //       </TelegramAuth>
-  //     </TonConnectUIProvider>
-  //   );
-  // }
+  if (!authenticated || !user) {
+    return (
+      <TonConnectUIProvider manifestUrl={manifestUrl}>
+        <TelegramAuth>
+          <LoginButton />
+        </TelegramAuth>
+      </TonConnectUIProvider>
+    );
+  }
 
   return (
     <TonConnectUIProvider manifestUrl={manifestUrl}>

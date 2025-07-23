@@ -24,15 +24,15 @@ const App: React.FC = () => {
     );
   }
 
-  if (!authenticated || !user) {
-    return (
-      <TonConnectUIProvider manifestUrl={manifestUrl}>
-        <TelegramAuth>
-          <LoginButton />
-        </TelegramAuth>
-      </TonConnectUIProvider>
-    );
-  }
+  // if (!authenticated || !user) {
+  //   return (
+  //     <TonConnectUIProvider manifestUrl={manifestUrl}>
+  //       <TelegramAuth>
+  //         <LoginButton />
+  //       </TelegramAuth>
+  //     </TonConnectUIProvider>
+  //   );
+  // }
 
   return (
     <TonConnectUIProvider manifestUrl={manifestUrl}>

@@ -2,16 +2,24 @@ import { create } from "zustand";
 
 interface BalanceState {
   isLoading: boolean;
-  balance: number;
-  tonBalance: number;
-  setBalance: (balance: number) => void;
+  polygonBalance: string;
+  polygonNativeBalance: string;
+  tonBalance: string;
+  tonNativeBalance: string;
   setIsLoading: (bool: boolean) => void;
+  setPolygonBalance: (balance: string, native: string) => void;
+  setTonBalance: (balance: string, native: string) => void;
 }
 
 export const useBalanceStore = create<BalanceState>()((set) => ({
   isLoading: false,
-  balance: 1000,
-  tonBalance: 100,
-  setBalance: (balance: number) => set({ balance }),
+  polygonBalance: "0",
+  polygonNativeBalance: "0",
+  tonBalance: "0",
+  tonNativeBalance: "0",
+  setPolygonBalance: (balance: string, native: string) =>
+    set({ polygonBalance: balance, polygonNativeBalance: native }),
+  setTonBalance: (balance: string, native: string) =>
+    set({ tonBalance: balance, tonNativeBalance: native }),
   setIsLoading: (bool: boolean) => set({ isLoading: bool }),
 }));

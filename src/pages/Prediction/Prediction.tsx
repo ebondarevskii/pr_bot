@@ -1,13 +1,13 @@
 import { Link as LinkIcon } from "@/components/icons/Link";
-import { BuyPrediction } from "@/components/UI/BuyPrediction";
+import { BuyPrediction } from "@/components/drawers/BuyPrediction";
 import { shortAddress } from "@/lib/address";
-import { useAppStore } from "@/store/useAppStore";
+import { usePredictionStore } from "@/store/usePredictionStore";
 import { useParams } from "react-router-dom";
 
 export const Prediction = () => {
   const { predictionId } = useParams();
 
-  const prediction = useAppStore((state) =>
+  const prediction = usePredictionStore((state) =>
     state.predictions.find((item) => item.id === predictionId)
   );
 

@@ -2,10 +2,14 @@ import { Banknote as BanknoteIcon } from "@/components/icons/Banknote";
 import { TrendingArrow as TrendingArrowIcon } from "@/components/icons/TrendingArrow";
 
 import { Badge } from "@/components/UI/badge";
-import { Button } from "@/components/UI/button";
-import { TopUp } from "@/components/UI/TopUp";
+import { Button } from "@/components/UI/Button";
+import { TopUp } from "@/components/drawers/TopUp";
+import { useBalanceStore } from "@/store/useBalanceStore";
+import { getFiatAmountCorrect } from "@/lib/number";
 
 export const BalanceCard = () => {
+  const userAppUsdtBalance = useBalanceStore((state) => state.polygonBalance);
+
   return (
     <div className="mb-10 flex-col p-6 rounded-[14px] border border-[#E5E5E5] bg-linear-[180deg, rgba(23, 23, 23, 0.00) 0%, rgba(23, 23, 23, 0.05) 100%), #FFF]">
       <div className="flex justify-between mb-1.5">
@@ -22,7 +26,7 @@ export const BalanceCard = () => {
         </Badge>
       </div>
       <p className="text-[#0A0A0A] font-['Geist'] font-semibold text-3xl mb-6">
-        $1,000.00
+        {`$${getFiatAmountCorrect(userAppUsdtBalance)}`}
       </p>
       <div className="flex justify-between mb-5">
         <p className="text-[#737373] font-['Geist'] text-sm font-normal"></p>

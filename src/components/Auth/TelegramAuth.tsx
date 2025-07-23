@@ -25,7 +25,6 @@ export const TelegramAuth: React.FC<TelegramAuthProps> = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    logout();
     if (ready && isMiniApp && !authenticated && !hasLinked) {
       setHasLinked(true);
       try {

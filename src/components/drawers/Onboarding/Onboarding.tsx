@@ -4,24 +4,33 @@ import { Info as InfoIcon } from "../../icons/Info";
 import { NextArrow as NextArrowIcon } from "../../icons/NextArrow";
 import { useState } from "react";
 import { onboardingSteps } from "./constant";
-import { Button } from "../button";
-import { TopUp } from "../TopUp";
+
+import { TopUp } from "../../drawers/TopUp";
+import { Button } from "@/components/UI/Button";
 
 export const Onboarding = () => {
+  const [open, setOpen] = useState<boolean>(false);
+
   const [step, setStep] = useState(1);
 
   const currentStep = onboardingSteps[step - 1];
 
   const isLastStep = step === onboardingSteps.length;
 
+  const closeDrawer = () => {
+    setOpen(false);
+  };
+
   const onGoNextStep = () => {
     if (isLastStep) {
+      closeDrawer();
+      return;
     }
     setStep((prev) => prev + 1);
   };
 
   return (
-    <Drawer>
+    <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
         <div
           data-button="true"
@@ -54,7 +63,7 @@ export const Onboarding = () => {
 
           <div className="bg-[#f5f5f5] w-full h-40 bg-base-secondary rounded-lg shadow-[0px_1px_2px_0px_rgba(0,0,0,0.05)] mb-[12px]" />
 
-          <p className="mb-[116px] text-[#737373] self-stretch text-center justify-start text-base-muted-foreground text-base font-normal font-['Geist'] leading-normal">
+          <p className="mb-[86px] text-[#737373] self-stretch text-center justify-start text-base-muted-foreground text-base font-normal font-['Geist'] leading-normal">
             {currentStep.description}
           </p>
           {isLastStep ? (
@@ -71,7 +80,7 @@ export const Onboarding = () => {
           {step === 4 && (
             <Button
               variant="outline"
-              onClick={onGoNextStep}
+              onClick={closeDrawer}
               className="w-full mb-[16px]"
             >
               Learn more

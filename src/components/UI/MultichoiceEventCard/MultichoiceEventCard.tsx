@@ -24,7 +24,9 @@ export const MultichoiceEventCard: React.FC<Props> = ({
 
   const [isViewAll, setIsViewAll] = useState(false);
 
-  const onClickViewAll = () => {
+  const onClickViewAll = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+
     setIsViewAll((prev) => !prev);
   };
 

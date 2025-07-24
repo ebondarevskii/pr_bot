@@ -4,8 +4,8 @@ FROM node:22-alpine AS builder
 # Set working directory
 WORKDIR /app
 
-# Set Node.js memory limit to 2.5GB
-ENV NODE_OPTIONS="--max-old-space-size=2500"
+# Set Node.js memory limit to 2.3GB
+ENV NODE_OPTIONS="--max-old-space-size=2300"
 
 # Принятие аргументов от Coolify
 ARG VITE_PIMLICO_API_KEY

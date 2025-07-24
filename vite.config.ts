@@ -26,6 +26,7 @@ export default defineConfig({
     port: Number(process.env.VITE_PORT) || 3000,
     host: '0.0.0.0',
   },
+  cacheDir: '.vite', // Make sure the cache is stored in a persistent location
   build: {
     outDir: 'dist',
     sourcemap: false, // Disable source maps to reduce memory usage

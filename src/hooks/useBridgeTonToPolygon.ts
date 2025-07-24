@@ -27,15 +27,19 @@ export const useBridgeTonToPolygon = (): UseBridgeTonToPolygonReturn => {
   }: SendTransactionParams) => {
     setIsLoading(true);
 
-    const txTesponse = await getTonToPolygonBridgeTx({
-      tonAddressFrom,
-      polygonAddressTo,
-      amountIn,
-    });
+    try {
+      const txTesponse = await getTonToPolygonBridgeTx({
+        tonAddressFrom,
+        polygonAddressTo,
+        amountIn,
+      });
 
-    await tonConnectUI.sendTransaction(txTesponse.tx);
-
-    setIsLoading(false);
+      await tonConnectUI.sendTransaction(txTesponse.tx);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return { sendTransaction, isLoading };

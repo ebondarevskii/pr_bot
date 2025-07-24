@@ -9,7 +9,7 @@ import "./styles/global.css";
 import { AppRoutes } from "./AppRoutes";
 
 const App: React.FC = () => {
-  const { authenticated, user, logout, ready } = usePrivy();
+  const { authenticated, user, ready } = usePrivy();
 
   const manifestUrl = `https://gist.githubusercontent.com/z0rats/370cce01adcc582a1177ffbd058172bf/raw/c8f7089ed5fb1e7c7b024e0f8e2ef43bfa62bd9f/tonconnect-manifest.json`;
 

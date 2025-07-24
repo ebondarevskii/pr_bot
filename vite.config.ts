@@ -29,8 +29,9 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     sourcemap: false, // Disable source maps to reduce memory usage
+    target: 'esnext',
     chunkSizeWarningLimit: 1000,
-    minify: 'terser', // Use terser for better minification
+    minify: 'esbuild',
     rollupOptions: {
       output: {
         manualChunks: (id) => {

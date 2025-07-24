@@ -15,16 +15,16 @@ export default defineConfig({
     },
   },
   server: {
-    port: 80,
-    host: true,
+    port: Number(process.env.VITE_PORT) || 3000,
+    host: '0.0.0.0',
     hmr: {
-      clientPort: 80,
+      clientPort: Number(process.env.VITE_PORT) || 3000,
     },
-    allowedHosts: [
-      "mighty-hugely-boxer.ngrok-free.app",
-      "splendid-glorious-boar.ngrok-free.app",
-      "localhost",
-    ],
+    allowedHosts: ['*'],
+  },
+  preview: {
+    port: Number(process.env.VITE_PORT) || 3000,
+    host: '0.0.0.0',
   },
   build: {
     outDir: 'dist',

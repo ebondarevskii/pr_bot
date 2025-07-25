@@ -43,11 +43,6 @@ export const TopUp = () => {
   };
 
   const sendTopupTransaction = async () => {
-    if (!tonAddress) {
-      connectTonWallet();
-      return;
-    }
-
     sendTransaction({
       tonAddressFrom: tonAddress,
       polygonAddressTo: polygonAddress,
@@ -57,9 +52,18 @@ export const TopUp = () => {
     setOpen(false);
   };
 
+  const onClickButton = () => {
+    if (!tonAddress) {
+      connectTonWallet();
+      return;
+    }
+
+    setOpen(true);
+  };
+
   return (
     <Drawer open={open} onOpenChange={setOpen}>
-      <DrawerTrigger asChild>
+      <DrawerTrigger asChild onClick={onClickButton}>
         <Button variant="default" className="w-full mb-2">
           Add funds
         </Button>

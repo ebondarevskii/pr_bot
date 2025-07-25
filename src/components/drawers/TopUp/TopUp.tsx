@@ -11,7 +11,7 @@ import { getFiatAmountCorrect } from "@/lib/number";
 import { cn } from "@/lib/utils";
 import { Lock as LockIcon } from "@/components/icons/Lock";
 import { useBridgeTonToPolygon } from "@/hooks/useBridgeTonToPolygon";
-import { useAppStore } from "@/store/useAppStore";
+// import { useAppStore } from "@/store/useAppStore";
 import { useTonConnect } from "@/hooks/useTonConnect";
 import { usePimlicoSmartAccount } from "@/hooks/usePimlicoSmartAccount";
 import { useTonAddress } from "@tonconnect/ui-react";

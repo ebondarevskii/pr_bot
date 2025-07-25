@@ -30,8 +30,6 @@ export const DEFAULT_CHAIN = SUPPORTED_CHAINS.POLYGON;
 
 export const TELEGRAM_BOT_TOKEN = import.meta.env.VITE_TELEGRAM_BOT_TOKEN;
 
-console.log("TELEGRAM_BOT_TOKEN: ", TELEGRAM_BOT_TOKEN);
-
 // USDC contract address on Polygon
 export const USDC_CONTRACT_ADDRESS =
   "0x3c499c542cef5e3811e1192ce70d8cc03d5c3359";

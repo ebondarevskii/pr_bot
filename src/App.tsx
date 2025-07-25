@@ -2,14 +2,14 @@ import React from "react";
 import { usePrivy } from "@privy-io/react-auth";
 import { TonConnectUIProvider } from "@tonconnect/ui-react";
 import { LoginButton } from "@/components/Auth/LoginButton";
-// import { MainLayout } from "@/components/Layout/MainLayout";
+import { MainLayout } from "@/components/Layout/MainLayout";
 import { TelegramAuth } from "@/components/Auth/TelegramAuth";
 
 import "./styles/global.css";
-import { AppRoutes } from "./AppRoutes";
+// import { AppRoutes } from "./AppRoutes";
 
 const App: React.FC = () => {
-  const { authenticated, user, ready } = usePrivy();
+  const { authenticated, user, ready, logout } = usePrivy();
 
   const manifestUrl = `https://gist.githubusercontent.com/z0rats/370cce01adcc582a1177ffbd058172bf/raw/c8f7089ed5fb1e7c7b024e0f8e2ef43bfa62bd9f/tonconnect-manifest.json`;
 
@@ -36,8 +36,8 @@ const App: React.FC = () => {
 
   return (
     <TonConnectUIProvider manifestUrl={manifestUrl}>
-      {/* <MainLayout user={user!} onLogout={logout} /> */}
-      <AppRoutes />
+      <MainLayout user={user!} onLogout={logout} />
+      {/* <AppRoutes /> */}
     </TonConnectUIProvider>
   );
 };

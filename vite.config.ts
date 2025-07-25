@@ -20,11 +20,12 @@ export default defineConfig({
     hmr: {
       clientPort: Number(process.env.VITE_PORT) || 3000,
     },
-    allowedHosts: ["496b8cf03793.ngrok-free.app"],
+    allowedHosts: ["31754fdd6cf2.ngrok-free.app"],
   },
   preview: {
     port: Number(process.env.VITE_PORT) || 3000,
     host: "0.0.0.0",
+    allowedHosts: ["31754fdd6cf2.ngrok-free.app"],
   },
   cacheDir: ".vite", // Make sure the cache is stored in a persistent location
   build: {

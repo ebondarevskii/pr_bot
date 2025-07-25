@@ -14,6 +14,7 @@ export default defineConfig({
       "@": "/src",
     },
   },
+  publicDir: "public",
   server: {
     port: Number(process.env.VITE_PORT) || 3000,
     host: "0.0.0.0",

@@ -52,7 +52,9 @@ export const TopUp = () => {
     setOpen(false);
   };
 
-  const onClickButton = () => {
+  // @ts-ignore
+  const onClickButton = (e) => {
+    e.preventDefault();
     if (!tonAddress) {
       connectTonWallet();
       return;

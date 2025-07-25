@@ -26,7 +26,12 @@ const App: React.FC = () => {
 
   if (!authenticated || !user) {
     return (
-      <TonConnectUIProvider manifestUrl={manifestUrl}>
+      <TonConnectUIProvider
+        manifestUrl={manifestUrl}
+        actionsConfiguration={{
+          twaReturnUrl: "https://t.me/mighty_hugely_bot", // важно для мини-аппов
+        }}
+      >
         <TelegramAuth>
           <LoginButton />
         </TelegramAuth>
@@ -35,7 +40,12 @@ const App: React.FC = () => {
   }
 
   return (
-    <TonConnectUIProvider manifestUrl={manifestUrl}>
+    <TonConnectUIProvider
+      manifestUrl={manifestUrl}
+      actionsConfiguration={{
+        twaReturnUrl: "https://t.me/mighty_hugely_bot", // важно для мини-аппов
+      }}
+    >
       {/* <MainLayout user={user!} onLogout={logout} /> */}
       <AppRoutes />
     </TonConnectUIProvider>

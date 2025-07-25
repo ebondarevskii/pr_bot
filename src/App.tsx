@@ -11,7 +11,8 @@ import { AppRoutes } from "./AppRoutes";
 const App: React.FC = () => {
   const { authenticated, user, ready } = usePrivy();
 
-  const manifestUrl = `https://telegram-mini-app.vercel.app/tonconnect-manifest.json`;
+  // const manifestUrl = `https://telegram-mini-app.vercel.app/tonconnect-manifest.json`;
+  const manifestUrl = `https://gist.githubusercontent.com/z0rats/370cce01adcc582a1177ffbd058172bf/raw/c8f7089ed5fb1e7c7b024e0f8e2ef43bfa62bd9f/tonconnect-manifest.json`;
 
   if (!ready) {
     return (
@@ -24,20 +25,20 @@ const App: React.FC = () => {
     );
   }
 
-  if (!authenticated || !user) {
-    return (
-      <TonConnectUIProvider
-        manifestUrl={manifestUrl}
-        actionsConfiguration={{
-          twaReturnUrl: "https://t.me/mighty_hugely_bot", // важно для мини-аппов
-        }}
-      >
-        <TelegramAuth>
-          <LoginButton />
-        </TelegramAuth>
-      </TonConnectUIProvider>
-    );
-  }
+  // if (!authenticated || !user) {
+  //   return (
+  //     <TonConnectUIProvider
+  //       manifestUrl={manifestUrl}
+  //       actionsConfiguration={{
+  //         twaReturnUrl: "https://t.me/mighty_hugely_bot", // важно для мини-аппов
+  //       }}
+  //     >
+  //       <TelegramAuth>
+  //         <LoginButton />
+  //       </TelegramAuth>
+  //     </TonConnectUIProvider>
+  //   );
+  // }
 
   return (
     <TonConnectUIProvider

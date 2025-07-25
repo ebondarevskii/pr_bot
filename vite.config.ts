@@ -1,11 +1,9 @@
 import { defineConfig } from "vite";
-import basicSsl from "@vitejs/plugin-basic-ssl";
 import react from "@vitejs/plugin-react";
 import { NodeGlobalsPolyfillPlugin } from "@esbuild-plugins/node-globals-polyfill";
 
 export default defineConfig({
   plugins: [
-    basicSsl(),
     react(),
     NodeGlobalsPolyfillPlugin({
       buffer: true,
@@ -18,82 +16,86 @@ export default defineConfig({
   },
   server: {
     port: Number(process.env.VITE_PORT) || 3000,
-    host: '0.0.0.0',
+    host: "0.0.0.0",
     hmr: {
       clientPort: Number(process.env.VITE_PORT) || 3000,
     },
-    allowedHosts: ['*'],
+    allowedHosts: ["496b8cf03793.ngrok-free.app"],
   },
   preview: {
     port: Number(process.env.VITE_PORT) || 3000,
-    host: '0.0.0.0',
+    host: "0.0.0.0",
   },
-  cacheDir: '.vite', // Make sure the cache is stored in a persistent location
+  cacheDir: ".vite", // Make sure the cache is stored in a persistent location
   build: {
-    outDir: 'dist',
+    outDir: "dist",
     sourcemap: false, // Disable source maps to reduce memory usage
-    target: 'esnext',
+    target: "esnext",
     chunkSizeWarningLimit: 1000,
-    minify: 'esbuild',
+    minify: "esbuild",
     rollupOptions: {
       output: {
         manualChunks: (id) => {
-          if (id.includes('node_modules')) {
-            if (id.includes('react') && !id.includes('router')) {
-              return 'react-vendor';
+          if (id.includes("node_modules")) {
+            if (id.includes("react") && !id.includes("router")) {
+              return "react-vendor";
             }
-            if (id.includes('react-router-dom')) {
-              return 'router-vendor';
-            }
-            if (
-              id.includes('@privy-io/react-auth') ||
-              id.includes('@tonconnect/ui-react') ||
-              id.includes('permissionless') ||
-              id.includes('viem')
-            ) {
-              return 'blockchain-vendor';
+            if (id.includes("react-router-dom")) {
+              return "router-vendor";
             }
             if (
-              id.includes('@telegram-apps/bridge') ||
-              id.includes('vaul') ||
-              id.includes('@radix-ui') ||
-              id.includes('clsx') ||
-              id.includes('tailwind-merge') ||
-              id.includes('class-variance-authority')
+              id.includes("@privy-io/react-auth") ||
+              id.includes("@tonconnect/ui-react") ||
+              id.includes("permissionless") ||
+              id.includes("viem")
             ) {
-              return 'ui-vendor';
+              return "blockchain-vendor";
             }
             if (
-              id.includes('axios') ||
-              id.includes('crypto-js')
+              id.includes("@telegram-apps/bridge") ||
+              id.includes("vaul") ||
+              id.includes("@radix-ui") ||
+              id.includes("clsx") ||
+              id.includes("tailwind-merge") ||
+              id.includes("class-variance-authority")
             ) {
-              return 'network-vendor';
+              return "ui-vendor";
             }
-            if (id.includes('@ton/core')) {
-              return 'ton-vendor';
+            if (id.includes("axios") || id.includes("crypto-js")) {
+              return "network-vendor";
+            }
+            if (id.includes("@ton/core")) {
+              return "ton-vendor";
             }
           }
         },
         chunkFileNames: (chunkInfo) => {
           const facadeModuleId = chunkInfo.facadeModuleId
-            ? chunkInfo.facadeModuleId.split('/').pop()?.replace('.tsx', '').replace('.ts', '')
-            : 'chunk';
+            ? chunkInfo.facadeModuleId
+                .split("/")
+                .pop()
+                ?.replace(".tsx", "")
+                .replace(".ts", "")
+            : "chunk";
           return `assets/${facadeModuleId}-[hash].js`;
         },
         assetFileNames: (assetInfo) => {
-          const info = assetInfo.name?.split('.') || [];
+          const info = assetInfo.name?.split(".") || [];
           const ext = info[info.length - 1];
-          if (/\.(css)$/.test(assetInfo.name || '')) {
+          if (/\.(css)$/.test(assetInfo.name || "")) {
             return `assets/[name]-[hash].${ext}`;
           }
           return `assets/[name]-[hash].${ext}`;
         },
       },
       onwarn(warning, warn) {
-        if (warning.message && (
-          warning.message.includes('/*#__PURE__*/') ||
-          warning.message.includes('contains an annotation that Rollup cannot interpret')
-        )) {
+        if (
+          warning.message &&
+          (warning.message.includes("/*#__PURE__*/") ||
+            warning.message.includes(
+              "contains an annotation that Rollup cannot interpret"
+            ))
+        ) {
           return;
         }
         warn(warning);

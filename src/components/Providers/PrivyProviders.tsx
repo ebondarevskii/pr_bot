@@ -1,7 +1,7 @@
-import React from 'react';
-import { PrivyProvider } from '@privy-io/react-auth';
-import { mainnet, polygon, optimism, base } from 'viem/chains';
-import { privyService } from '@/services/privy';
+import React from "react";
+import { PrivyProvider } from "@privy-io/react-auth";
+import { mainnet, polygon, optimism, base } from "viem/chains";
+import { privyService } from "@/services/privy";
 
 interface PrivyProvidersProps {
   children: React.ReactNode;
@@ -16,7 +16,8 @@ export const PrivyProviders: React.FC<PrivyProvidersProps> = ({ children }) => {
         <div className="text-center">
           <h1 className="text-xl font-semibold mb-4">Configuration Error</h1>
           <p className="text-gray-600">
-            Privy App ID is not configured. Please set VITE_PRIVY_APP_ID in your environment variables.
+            Privy App ID is not configured. Please set VITE_PRIVY_APP_ID in your
+            environment variables.
           </p>
         </div>
       </div>
@@ -27,16 +28,16 @@ export const PrivyProviders: React.FC<PrivyProvidersProps> = ({ children }) => {
     <PrivyProvider
       appId={appId}
       config={{
-        loginMethods: ['telegram'],
+        loginMethods: ["telegram"],
         /* Replace this with your desired appearance configuration */
         appearance: {
-          theme: 'light',
-          accentColor: '#676FFF',
-          logo: 'your-logo-url'
+          theme: "light",
+          accentColor: "#676FFF",
+          logo: "your-logo-url",
         },
         embeddedWallets: {
-            createOnLogin: 'users-without-wallets',
-            showWalletUIs: false
+          createOnLogin: "users-without-wallets",
+          showWalletUIs: false,
         },
         defaultChain: polygon,
         supportedChains: [mainnet, polygon, optimism, base],
@@ -45,4 +46,4 @@ export const PrivyProviders: React.FC<PrivyProvidersProps> = ({ children }) => {
       {children}
     </PrivyProvider>
   );
-}; 
+};

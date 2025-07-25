@@ -25,18 +25,28 @@ export const TelegramAuth: React.FC<TelegramAuthProps> = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    if (ready && isMiniApp && !authenticated && !hasLinked) {
+    const tryLoginWithTelegram = async () => {
+      console.log("tet: ", authenticated);
+      if (!ready || !isMiniApp || authenticated || hasLinked) return;
+
       setHasLinked(true);
+
       try {
-        const launchParams = retrieveLaunchParams();
-        if (launchParams && launchParams.initDataRaw) {
-          linkTelegram({ launchParams: launchParams.initDataRaw });
+        const params = await retrieveLaunchParams();
+
+        const initDataRaw =
+          params?.initDataRaw || window.Telegram?.WebApp?.initData;
+
+        if (initDataRaw) {
+          await linkTelegram({ launchParams: initDataRaw });
         }
       } catch (error) {
-        // Fallback to manual login if launch params fail
+        console.error("Error during Telegram login", error);
       }
-    }
-  }, [ready, isMiniApp, authenticated, hasLinked, linkTelegram]);
+    };
+
+    tryLoginWithTelegram();
+  }, [ready, isMiniApp, authenticated, hasLinked]);
 
   if (!ready) {
     return (
@@ -54,14 +64,13 @@ export const TelegramAuth: React.FC<TelegramAuthProps> = ({ children }) => {
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
           <h1 className="text-xl font-semibold mb-4">Welcome</h1>
-          {!isMiniApp && (
-            <button
-              onClick={login}
-              className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors"
-            >
-              Login with Telegram
-            </button>
-          )}
+
+          <button
+            onClick={login}
+            className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors"
+          >
+            Login with Telegram
+          </button>
         </div>
       </div>
     );

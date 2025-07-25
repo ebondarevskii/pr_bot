@@ -7,7 +7,7 @@ interface TelegramAuthProps {
 }
 
 export const TelegramAuth: React.FC<TelegramAuthProps> = ({ children }) => {
-  const { authenticated, ready, linkTelegram, login, logout } = usePrivy();
+  const { authenticated, ready, linkTelegram, login } = usePrivy();
   const [hasLinked, setHasLinked] = useState(false);
   const [isMiniApp, setIsMiniApp] = useState(false);
 

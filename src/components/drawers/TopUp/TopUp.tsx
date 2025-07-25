@@ -12,8 +12,11 @@ import { cn } from "@/lib/utils";
 import { Lock as LockIcon } from "@/components/icons/Lock";
 import { useBridgeTonToPolygon } from "@/hooks/useBridgeTonToPolygon";
 import { useAppStore } from "@/store/useAppStore";
+import { useTonConnect } from "@/hooks/useTonConnect";
 
 export const TopUp = () => {
+  const { connectTonWallet } = useTonConnect();
+
   const [open, setOpen] = useState<boolean>(false);
 
   const polygonAddress = useAppStore((state) => state.polygonAddress);
@@ -40,6 +43,11 @@ export const TopUp = () => {
   };
 
   const sendTopupTransaction = async () => {
+    if (!tonAddress) {
+      connectTonWallet();
+      return;
+    }
+
     sendTransaction({
       tonAddressFrom: tonAddress,
       polygonAddressTo: polygonAddress,

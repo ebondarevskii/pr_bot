@@ -54,7 +54,7 @@ export const TopUp = () => {
     sendTransaction({
       tonAddressFrom: tonAddress,
       polygonAddressTo: polygonAddress,
-      amountIn: toNano(amount),
+      amountIn: amount / 1_000_000,
     });
 
     setOpen(false);

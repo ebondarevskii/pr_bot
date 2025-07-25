@@ -13,14 +13,22 @@ import { Lock as LockIcon } from "@/components/icons/Lock";
 import { useBridgeTonToPolygon } from "@/hooks/useBridgeTonToPolygon";
 import { useAppStore } from "@/store/useAppStore";
 import { useTonConnect } from "@/hooks/useTonConnect";
+import { usePimlicoSmartAccount } from "@/hooks/usePimlicoSmartAccount";
+import { useTonAddress } from "@tonconnect/ui-react";
 
 export const TopUp = () => {
   const { connectTonWallet } = useTonConnect();
 
   const [open, setOpen] = useState<boolean>(false);
 
-  const polygonAddress = useAppStore((state) => state.polygonAddress);
-  const tonAddress = useAppStore((state) => state.tonAddress);
+  // const polygonAddress = useAppStore((state) => state.polygonAddress);
+  // const tonAddress = useAppStore((state) => state.tonAddress);
+
+  const { smartAccount } = usePimlicoSmartAccount();
+
+  const tonAddress = useTonAddress();
+
+  const polygonAddress = smartAccount?.address || "";
 
   const [amount, setAmount] = useState<number>(0);
 

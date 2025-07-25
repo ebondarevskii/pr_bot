@@ -2,11 +2,11 @@ import React from "react";
 import { usePrivy } from "@privy-io/react-auth";
 import { TonConnectUIProvider } from "@tonconnect/ui-react";
 import { LoginButton } from "@/components/Auth/LoginButton";
-import { MainLayout } from "@/components/Layout/MainLayout";
+// import { MainLayout } from "@/components/Layout/MainLayout";
 import { TelegramAuth } from "@/components/Auth/TelegramAuth";
 
 import "./styles/global.css";
-// import { AppRoutes } from "./AppRoutes";
+import { AppRoutes } from "./AppRoutes";
 
 const App: React.FC = () => {
   const { authenticated, user, ready, logout } = usePrivy();
@@ -36,8 +36,8 @@ const App: React.FC = () => {
 
   return (
     <TonConnectUIProvider manifestUrl={manifestUrl}>
-      <MainLayout user={user!} onLogout={logout} />
-      {/* <AppRoutes /> */}
+      {/* <MainLayout user={user!} onLogout={logout} /> */}
+      <AppRoutes />
     </TonConnectUIProvider>
   );
 };

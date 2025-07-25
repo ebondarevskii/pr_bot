@@ -34,7 +34,7 @@ export const sendRequest = async <T, D = object>({
 export type GetTonToPolygonBridgeTxParams = {
   tonAddressFrom: string;
   polygonAddressTo: string;
-  amountIn: bigint;
+  amountIn: number;
 };
 
 export const getTonToPolygonBridgeTx = async ({

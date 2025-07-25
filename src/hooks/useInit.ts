@@ -16,7 +16,7 @@ export const useInit = () => {
   const setIsLoading = useBalanceStore((state) => state.setIsLoading);
 
   const setAddresses = useAppStore((state) => state.setAddresses);
-  console.log("addresses: ", tonAddress, smartAccount?.address);
+
   const fetchBalances = async () => {
     if (!smartAccount?.address || !tonAddress) {
       return;
@@ -24,7 +24,7 @@ export const useInit = () => {
     setIsLoading(true);
     try {
       const balances = await getUserBalances({
-        tonAddress: "",
+        tonAddress,
         polygonAddress: smartAccount?.address,
       });
 

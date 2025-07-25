@@ -15,6 +15,7 @@ import { useBridgeTonToPolygon } from "@/hooks/useBridgeTonToPolygon";
 import { useTonConnect } from "@/hooks/useTonConnect";
 import { usePimlicoSmartAccount } from "@/hooks/usePimlicoSmartAccount";
 import { useTonAddress } from "@tonconnect/ui-react";
+import { formatUnits } from "viem";
 
 export const TopUp = () => {
   const { connectTonWallet } = useTonConnect();
@@ -54,7 +55,7 @@ export const TopUp = () => {
     sendTransaction({
       tonAddressFrom: tonAddress,
       polygonAddressTo: polygonAddress,
-      amountIn: amount / 1_000_000,
+      amountIn: formatUnits(BigInt(amount), 6),
     });
 
     setOpen(false);

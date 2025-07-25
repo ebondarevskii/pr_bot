@@ -12,7 +12,7 @@ export type UseBridgeTonToPolygonReturn = {
 export type SendTransactionParams = {
   tonAddressFrom: string;
   polygonAddressTo: string;
-  amountIn: number;
+  amountIn: string;
 };
 
 export const useBridgeTonToPolygon = (): UseBridgeTonToPolygonReturn => {

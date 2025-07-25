@@ -34,6 +34,8 @@ export const useBridgeTonToPolygon = (): UseBridgeTonToPolygonReturn => {
         amountIn,
       });
 
+      console.log("txTesponse: ", txTesponse);
+
       await tonConnectUI.sendTransaction(txTesponse.tx);
     } catch (error) {
       console.error(error);

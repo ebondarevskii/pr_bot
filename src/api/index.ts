@@ -3,7 +3,8 @@ import { TRequestParams } from "@/types/axios";
 import { TonToPolygonBridgeTx } from "@/types/bridge";
 import axios, { AxiosResponse } from "axios";
 
-const apiUrl = import.meta.env.VITE_API_URL;
+const apiUrl =
+  import.meta.env.VITE_API_URL || "https://dev-backend.predicton.live";
 
 export const sendRequest = async <T, D = object>({
   url,

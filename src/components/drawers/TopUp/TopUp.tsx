@@ -2,7 +2,6 @@ import { Drawer, DrawerContent, DrawerTrigger } from "../drawer";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../UI/tabs";
 
 import { useState } from "react";
-import { toNano } from "@ton/core";
 
 import { Button } from "@/components/UI/Button";
 import { Minus as MinusIcon } from "@/components/icons/Minus";
@@ -15,7 +14,7 @@ import { useBridgeTonToPolygon } from "@/hooks/useBridgeTonToPolygon";
 import { useTonConnect } from "@/hooks/useTonConnect";
 import { usePimlicoSmartAccount } from "@/hooks/usePimlicoSmartAccount";
 import { useTonAddress } from "@tonconnect/ui-react";
-import { formatUnits, parseUnits } from "viem";
+import { parseUnits } from "viem";
 
 export const TopUp = () => {
   const { connectTonWallet } = useTonConnect();

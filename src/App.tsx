@@ -16,7 +16,7 @@ const App: React.FC = () => {
 
   if (!ready) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
+      <div className="flex items-center justify-center min-h-screen ">
         <div className="text-center">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-4"></div>
           <p className="text-gray-600">Loading...</p>
@@ -25,20 +25,20 @@ const App: React.FC = () => {
     );
   }
 
-  // if (!authenticated || !user) {
-  //   return (
-  //     <TonConnectUIProvider
-  //       manifestUrl={manifestUrl}
-  //       actionsConfiguration={{
-  //         twaReturnUrl: "https://t.me/mighty_hugely_bot", // важно для мини-аппов
-  //       }}
-  //     >
-  //       <TelegramAuth>
-  //         <LoginButton />
-  //       </TelegramAuth>
-  //     </TonConnectUIProvider>
-  //   );
-  // }
+  if (!authenticated || !user) {
+    return (
+      <TonConnectUIProvider
+        manifestUrl={manifestUrl}
+        actionsConfiguration={{
+          twaReturnUrl: "https://t.me/mighty_hugely_bot", // важно для мини-аппов
+        }}
+      >
+        <TelegramAuth>
+          <LoginButton />
+        </TelegramAuth>
+      </TonConnectUIProvider>
+    );
+  }
 
   return (
     <TonConnectUIProvider

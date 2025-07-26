@@ -14,23 +14,23 @@ export const Market = () => {
       <Onboarding />
 
       {predictions.map((item) => {
-        if (item.isMultiChoice) {
-          return (
-            <MultichoiceEventCard
-              name={item.title}
-              volume={item.volume}
-              imageUrl={item.logo}
-              choices={item.choises!}
-              id={item.id}
-              key={item.id}
-            />
-          );
-        }
+        // if (item.isMultiChoice) {
+        //   return (
+        //     <MultichoiceEventCard
+        //       name={item.title}
+        //       volume={item.volume}
+        //       imageUrl={item.logo}
+        //       choices={item.choises!}
+        //       id={item.id}
+        //       key={item.id}
+        //     />
+        //   );
+        // }
         return (
           <EventCard
-            name={item.title}
+            name={item.question}
             volume={item.volume}
-            imageUrl={item.logo}
+            imageUrl={item.image}
             id={item.id}
             key={item.id}
           />

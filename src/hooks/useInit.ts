@@ -4,7 +4,8 @@ import { useAppStore } from "@/store/useAppStore";
 import { useBalanceStore } from "@/store/useBalanceStore";
 import { useEffect } from "react";
 import { usePimlicoSmartAccount } from "./usePimlicoSmartAccount";
-import { getUserBalances } from "@/api";
+import { getMarketPridictions, getUserBalances } from "@/api";
+import { usePredictionStore } from "@/store/usePredictionStore";
 
 export const useInit = () => {
   const { smartAccount } = usePimlicoSmartAccount();
@@ -14,6 +15,11 @@ export const useInit = () => {
   const setPolygonBalance = useBalanceStore((state) => state.setPolygonBalance);
   const setTonBalance = useBalanceStore((state) => state.setTonBalance);
   const setIsLoading = useBalanceStore((state) => state.setIsLoading);
+
+  const setPredictions = usePredictionStore((state) => state.setPredictions);
+  const setIsLoadingPredictions = usePredictionStore(
+    (state) => state.setIsLoading
+  );
 
   const setAddresses = useAppStore((state) => state.setAddresses);
 
@@ -40,6 +46,19 @@ export const useInit = () => {
     }
   };
 
+  const fetchPredictions = async () => {
+    setIsLoadingPredictions(true);
+    try {
+      const market = await getMarketPridictions();
+
+      if (market) {
+        setPredictions(market);
+      }
+    } finally {
+      setIsLoadingPredictions(false);
+    }
+  };
+
   console.log("test: ", tonAddress, smartAccount?.address);
 
   const changeAddresses = () => {
@@ -52,6 +71,7 @@ export const useInit = () => {
 
   useEffect(() => {
     fetchBalances();
-    changeAddresses;
+    changeAddresses();
+    fetchPredictions();
   }, [smartAccount?.address, tonAddress]);
 };

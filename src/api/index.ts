@@ -1,6 +1,7 @@
 import { GetUserBalancesReturn } from "@/types/api";
 import { TRequestParams } from "@/types/axios";
 import { TonToPolygonBridgeTx } from "@/types/bridge";
+import { TPrediction } from "@/types/prediction";
 import axios, { AxiosResponse } from "axios";
 
 const apiUrl =
@@ -83,11 +84,8 @@ export const getUserBalances = async ({
   });
 };
 
-// export const getMarketPridictions = async ({
-//   tonAddress,
-//   polygonAddress,
-// }: GetUserBalancesParams): Promise<GetUserBalancesReturn> => {
-//   return sendRequest<GetUserBalancesReturn>({
-//     url: `${apiUrl}/balances?tonAddress=${tonAddress}&polygonAddress=${polygonAddress}`,
-//   });
-// };
+export const getMarketPridictions = async (): Promise<TPrediction[]> => {
+  return sendRequest<TPrediction[]>({
+    url: `${apiUrl}/polymarket/markets?limit=100`,
+  });
+};

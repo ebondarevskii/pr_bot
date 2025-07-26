@@ -47,13 +47,13 @@ export const BuyPrediction: React.FC<
         return 0;
       }
 
-      return prev - 10;
+      return prev - 1;
     });
   };
 
   const onClickPlus = () => {
     setAmount((prev) => {
-      return prev + 10;
+      return prev + 1;
     });
   };
 
@@ -184,7 +184,7 @@ export const BuyPrediction: React.FC<
               </div>
             </div>
             <h4 className="mb-[96px] mt-[16px] self-stretch text-center justify-start text-[#0a0a0a] text-lg font-semibold font-['Geist'] leading-none">
-              {isTxSuccess ? "Top up is ready" : "Top up is in progress"}
+              {isTxSuccess ? "Buy is ready" : "Buy is in progress"}
             </h4>
 
             <div className="flex-col items-center gap-[8px]">

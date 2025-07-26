@@ -1,18 +1,140 @@
+import { BuyPrediction } from "@/components/drawers/BuyPrediction";
+import { Link as LinkIcon } from "@/components/icons/Link";
+import { shortAddress } from "@/lib/address";
+import { usePredictionStore } from "@/store/usePredictionStore";
+
 export const PositionsCard = () => {
-  const positions = [];
+  const positions = usePredictionStore((state) => state.userPredictions);
+
   return (
     <div>
       <p className="text-[#0A0A0A] text-[16px] font-['Geist'] font-semibold mb-3">
         Positions
       </p>
 
-      {!positions.length && (
+      {positions.length ? (
         <>
           <div className="h-[156px] rounded-lg bg-[#F5F5F5] mb-3" />
           <p className="text-[#737373] text-[16px] font-['Geist'] font-normal flex justify-center">
             Your predictions will be displayed here
           </p>
         </>
+      ) : (
+        positions.map((item) => (
+          <>
+            <div className="overflow-scroll relative pt-[45px] w-full h-full px-2 mb-30">
+              <img
+                className="w-[36px] h-[36px] rounded-[8px] mb-3"
+                src={item?.image}
+              />
+              <h4 className="text-black text-xl font-semibold font-['Geist'] leading-7 mb-3">
+                {item?.question}
+              </h4>
+
+              <div className="mb-[26px] flex justify-between px-4 py-3 border border-[#E5E5E5] rounded-[10px] bg-[linear-gradient(180deg, rgba(23, 23, 23, 0.00) 0%,  rgba(23, 23, 23, 0.05) 100%), #FFF]">
+                <div className="flex-col gap-4">
+                  <p className="text-xs font-normal font-['Geist'] leading-none text-[#737373]">
+                    Chances
+                  </p>
+                  <p className="text-lg font-semibold font-['Geist'] leading-7 text-[#22c55e]">
+                    {`${12}%`}
+                  </p>
+                </div>
+
+                <div className="flex gap-4">
+                  <div className="h-full w-px bg-[#e5e5e5]" />
+
+                  <div className="flex-col gap-1">
+                    <p className="text-xs font-normal font-['Geist'] leading-none text-[#737373]">
+                      Volume
+                    </p>
+                    <p className="text-lg font-semibold font-['Geist'] leading-7 text-[#737373]">
+                      {`$${item?.volumeNum}`}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex gap-4">
+                  <div className="h-full w-px bg-[#e5e5e5]" />
+
+                  <div className="flex-col gap-1">
+                    <p className="text-xs font-normal font-['Geist'] leading-none text-[#737373]">
+                      Participants
+                    </p>
+                    <p className="text-lg font-semibold font-['Geist'] leading-7 text-[#737373]">
+                      {`${1216}`}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex gap-4">
+                  <div className="h-full w-px bg-[#e5e5e5]" />
+
+                  <div className="flex-col gap-1">
+                    <p className="text-xs font-normal font-['Geist'] leading-none text-[#737373]">
+                      Days left
+                    </p>
+                    <p className="text-lg font-semibold font-['Geist'] leading-7 text-[#737373]">
+                      {`${14}`}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <p className="text-base font-semibold font-['Geist'] leading-none mb-3">
+                About
+              </p>
+
+              <p className="text-base font-normal font-['Geist'] leading-normal text-[#737373] mb-[18px]">
+                {item?.description}
+              </p>
+
+              {item?.marketMakerAddress && (
+                <div className="flex w-full items-start rounded-[10px] border border-[#E5E5E5] px-4 py-3 mb-2.5 gap-3">
+                  <LinkIcon />
+                  <div className="flex-col justify-between">
+                    <p className="text-sm font-medium font-['Geist'] leading-tight text-[#0a0a0a]">
+                      Contract
+                    </p>
+                    <p className="text-sm font-normal font-['Geist'] leading-tight text-[#737373]">
+                      {shortAddress(item?.marketMakerAddress)}
+                    </p>
+                  </div>
+                </div>
+              )}
+
+              {item?.marketMakerAddress && (
+                <div className="flex w-full items-start rounded-[10px] border border-[#E5E5E5] px-4 py-3 gap-3">
+                  <LinkIcon />
+                  <div className="flex-col justify-between">
+                    <p className="text-sm font-medium font-['Geist'] leading-tight text-[#0a0a0a]">
+                      Resolver
+                    </p>
+                    <p className="text-sm font-normal font-['Geist'] leading-tight text-[#737373]">
+                      {shortAddress(item?.marketMakerAddress)}
+                    </p>
+                  </div>
+                </div>
+              )}
+
+              <div className="fixed bottom-[64px] w-[calc(100dvw-16px)] px-2 py-2.5 flex justify-between gap-2.5">
+                <BuyPrediction
+                  buttonTitle="Buy"
+                  defaultType="yes"
+                  variant="green"
+                  className="flex-1"
+                />
+
+                <BuyPrediction
+                  buttonTitle="Sell"
+                  defaultType="no"
+                  variant="red"
+                  className="flex-1"
+                />
+              </div>
+            </div>
+          </>
+        ))
       )}
     </div>
   );

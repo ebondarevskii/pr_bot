@@ -4,7 +4,11 @@ import { useAppStore } from "@/store/useAppStore";
 import { useBalanceStore } from "@/store/useBalanceStore";
 import { useEffect } from "react";
 import { usePimlicoSmartAccount } from "./usePimlicoSmartAccount";
-import { getMarketPridictions, getUserBalances } from "@/api";
+import {
+  getMarketPridictions,
+  getUserBalances,
+  getUserMarketPositions,
+} from "@/api";
 import { usePredictionStore } from "@/store/usePredictionStore";
 
 export const useInit = () => {
@@ -19,6 +23,10 @@ export const useInit = () => {
   const setPredictions = usePredictionStore((state) => state.setPredictions);
   const setIsLoadingPredictions = usePredictionStore(
     (state) => state.setIsLoading
+  );
+
+  const setUserPredictions = usePredictionStore(
+    (state) => state.setUserPredictions
   );
 
   const setAddresses = useAppStore((state) => state.setAddresses);
@@ -46,10 +54,16 @@ export const useInit = () => {
     }
   };
 
-  const fetchPredictions = async () => {
+  const fetchPredictions = async (address: string) => {
     setIsLoadingPredictions(true);
     try {
       const market = await getMarketPridictions();
+
+      const userPredictions = await getUserMarketPositions(address);
+
+      if (userPredictions) {
+        setUserPredictions(userPredictions);
+      }
 
       if (market) {
         setPredictions(market);
@@ -72,6 +86,6 @@ export const useInit = () => {
   useEffect(() => {
     fetchBalances();
     changeAddresses();
-    fetchPredictions();
+    fetchPredictions(smartAccount?.address || "");
   }, [smartAccount?.address, tonAddress]);
 };

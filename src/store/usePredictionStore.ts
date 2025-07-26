@@ -1,11 +1,12 @@
-import { Prediction, TPrediction } from "@/types/prediction";
+import { TPrediction } from "@/types/prediction";
 import { create } from "zustand";
 
 interface PredictionState {
   isLoading: boolean;
   predictions: TPrediction[];
-  userPredictions: Prediction[];
+  userPredictions: TPrediction[];
   setPredictions: (data: TPrediction[]) => void;
+  setUserPredictions: (data: TPrediction[]) => void;
   setIsLoading: (bool: boolean) => void;
 }
 
@@ -50,5 +51,6 @@ export const usePredictionStore = create<PredictionState>()((set) => ({
   predictions: [],
   userPredictions: [],
   setPredictions: (data: TPrediction[]) => set({ predictions: data }),
+  setUserPredictions: (data: TPrediction[]) => set({ userPredictions: data }),
   setIsLoading: (bool: boolean) => set({ isLoading: bool }),
 }));

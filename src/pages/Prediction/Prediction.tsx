@@ -12,7 +12,7 @@ export const Prediction = () => {
   );
 
   return (
-    <div className="relative pt-[45px] w-full h-full px-2">
+    <div className="overflow-scroll relative pt-[45px] w-full h-full px-2 mb-30">
       <img
         className="w-[36px] h-[36px] rounded-[8px] mb-3"
         src={prediction?.image}

@@ -46,13 +46,13 @@ export const TopUp = () => {
         return 0;
       }
 
-      return prev - 10;
+      return prev - 1;
     });
   };
 
   const onClickPlus = () => {
     setAmount((prev) => {
-      return prev + 10;
+      return prev + 1;
     });
   };
 

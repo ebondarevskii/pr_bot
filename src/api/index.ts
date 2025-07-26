@@ -89,3 +89,11 @@ export const getMarketPridictions = async (): Promise<TPrediction[]> => {
     url: `${apiUrl}/polymarket/markets?limit=100`,
   });
 };
+
+export const getUserMarketPositions = async (
+  userAddress: string
+): Promise<TPrediction[]> => {
+  return sendRequest<TPrediction[]>({
+    url: `${apiUrl}/polymarket/user-positions?user=${userAddress}`,
+  });
+};

@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { useTonConnectUI } from "@tonconnect/ui-react";
+// import { useTonConnectUI } from "@tonconnect/ui-react";
 
 // import { getTonToPolygonBridgeTx } from "@/api";
 
@@ -22,7 +22,7 @@ function delay(t, val) {
 }
 
 export const useDepositToPrediction = (): UseBridgeTonToPolygonReturn => {
-  const [tonConnectUI] = useTonConnectUI();
+  // const [tonConnectUI] = useTonConnectUI();
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isSuccess, setIsSuccess] = useState<boolean>(false);

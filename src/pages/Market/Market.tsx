@@ -1,7 +1,7 @@
 import { Onboarding } from "@/components/drawers/Onboarding";
 import { Header } from "@/components/UI/Header";
 import { EventCard } from "@/components/UI/EventCard";
-import { MultichoiceEventCard } from "@/components/UI/MultichoiceEventCard";
+// import { MultichoiceEventCard } from "@/components/UI/MultichoiceEventCard";
 import { usePredictionStore } from "@/store/usePredictionStore";
 
 export const Market = () => {

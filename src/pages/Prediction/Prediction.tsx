@@ -15,10 +15,10 @@ export const Prediction = () => {
     <div className="relative pt-[45px] w-full h-full px-2">
       <img
         className="w-[36px] h-[36px] rounded-[8px] mb-3"
-        src={prediction?.logo}
+        src={prediction?.image}
       />
       <h4 className="text-black text-xl font-semibold font-['Geist'] leading-7 mb-3">
-        {prediction?.title}
+        {prediction?.question}
       </h4>
 
       <div className="mb-[26px] flex justify-between px-4 py-3 border border-[#E5E5E5] rounded-[10px] bg-[linear-gradient(180deg, rgba(23, 23, 23, 0.00) 0%,  rgba(23, 23, 23, 0.05) 100%), #FFF]">
@@ -27,7 +27,7 @@ export const Prediction = () => {
             Chances
           </p>
           <p className="text-lg font-semibold font-['Geist'] leading-7 text-[#22c55e]">
-            {`${prediction?.chances}%`}
+            {`${12}%`}
           </p>
         </div>
 
@@ -39,7 +39,7 @@ export const Prediction = () => {
               Volume
             </p>
             <p className="text-lg font-semibold font-['Geist'] leading-7 text-[#737373]">
-              {`$${prediction?.volume}`}
+              {`$${prediction?.volumeNum}`}
             </p>
           </div>
         </div>
@@ -52,7 +52,7 @@ export const Prediction = () => {
               Participants
             </p>
             <p className="text-lg font-semibold font-['Geist'] leading-7 text-[#737373]">
-              {`${prediction?.participants}`}
+              {`${1216}`}
             </p>
           </div>
         </div>
@@ -65,7 +65,7 @@ export const Prediction = () => {
               Days left
             </p>
             <p className="text-lg font-semibold font-['Geist'] leading-7 text-[#737373]">
-              {`${prediction?.daysLeft}`}
+              {`${14}`}
             </p>
           </div>
         </div>
@@ -79,7 +79,7 @@ export const Prediction = () => {
         {prediction?.description}
       </p>
 
-      {prediction?.contract && (
+      {prediction?.marketMakerAddress && (
         <div className="flex w-full items-start rounded-[10px] border border-[#E5E5E5] px-4 py-3 mb-2.5 gap-3">
           <LinkIcon />
           <div className="flex-col justify-between">
@@ -87,13 +87,13 @@ export const Prediction = () => {
               Contract
             </p>
             <p className="text-sm font-normal font-['Geist'] leading-tight text-[#737373]">
-              {shortAddress(prediction?.contract)}
+              {shortAddress(prediction?.marketMakerAddress)}
             </p>
           </div>
         </div>
       )}
 
-      {prediction?.resolver && (
+      {prediction?.marketMakerAddress && (
         <div className="flex w-full items-start rounded-[10px] border border-[#E5E5E5] px-4 py-3 gap-3">
           <LinkIcon />
           <div className="flex-col justify-between">
@@ -101,7 +101,7 @@ export const Prediction = () => {
               Resolver
             </p>
             <p className="text-sm font-normal font-['Geist'] leading-tight text-[#737373]">
-              {shortAddress(prediction?.resolver)}
+              {shortAddress(prediction?.marketMakerAddress)}
             </p>
           </div>
         </div>

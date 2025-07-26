@@ -42,13 +42,12 @@ export const useInit = () => {
         polygonAddress: smartAccount?.address,
       });
 
-      if (balances.tonpolygon.native && balances.tonpolygon.usdt) {
-        setPolygonBalance(balances.tonpolygon.usdt, balances.tonpolygon.native);
-      }
+      setPolygonBalance(
+        balances?.tonpolygon?.usdt || "0",
+        balances?.tonpolygon?.native || "0"
+      );
 
-      if (balances.ton.native && balances.ton.usdt) {
-        setTonBalance(balances.ton.usdt, balances.ton.native);
-      }
+      setTonBalance(balances?.ton?.usdt || "0", balances?.ton?.native || "0");
     } finally {
       setIsLoading(false);
     }

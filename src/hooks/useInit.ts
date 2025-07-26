@@ -59,10 +59,10 @@ export const useInit = () => {
     try {
       const market = await getMarketPridictions();
 
-      const userPredictions = await getUserMarketPositions(address);
+      if (address) {
+        const userPredictions = await getUserMarketPositions(address);
 
-      if (userPredictions) {
-        setUserPredictions(userPredictions);
+        userPredictions && setUserPredictions(userPredictions);
       }
 
       if (market) {
@@ -88,4 +88,14 @@ export const useInit = () => {
     changeAddresses();
     fetchPredictions(smartAccount?.address || "");
   }, [smartAccount?.address, tonAddress]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      fetchBalances();
+    }, 60000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
 };

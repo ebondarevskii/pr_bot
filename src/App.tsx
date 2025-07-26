@@ -25,20 +25,20 @@ const App: React.FC = () => {
     );
   }
 
-  if (!authenticated || !user) {
-    return (
-      <TonConnectUIProvider
-        manifestUrl={manifestUrl}
-        actionsConfiguration={{
-          twaReturnUrl: "https://t.me/mighty_hugely_bot", // важно для мини-аппов
-        }}
-      >
-        <TelegramAuth>
-          <LoginButton />
-        </TelegramAuth>
-      </TonConnectUIProvider>
-    );
-  }
+  // if (!authenticated || !user) {
+  //   return (
+  //     <TonConnectUIProvider
+  //       manifestUrl={manifestUrl}
+  //       actionsConfiguration={{
+  //         twaReturnUrl: "https://t.me/mighty_hugely_bot", // важно для мини-аппов
+  //       }}
+  //     >
+  //       <TelegramAuth>
+  //         <LoginButton />
+  //       </TelegramAuth>
+  //     </TonConnectUIProvider>
+  //   );
+  // }
 
   return (
     <TonConnectUIProvider

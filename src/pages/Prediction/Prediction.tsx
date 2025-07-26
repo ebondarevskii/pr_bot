@@ -1,8 +1,9 @@
+import { useParams } from "react-router-dom";
+
 import { Link as LinkIcon } from "@/components/icons/Link";
 import { BuyPrediction } from "@/components/drawers/BuyPrediction";
 import { shortAddress } from "@/lib/address";
 import { usePredictionStore } from "@/store/usePredictionStore";
-import { useParams } from "react-router-dom";
 
 export const Prediction = () => {
   const { predictionId } = useParams();
@@ -70,6 +71,11 @@ export const Prediction = () => {
           </div>
         </div>
       </div>
+
+      <img
+        src="/assets/Chart.png"
+        style={{ width: "100%", height: 188, marginBottom: 45, marginTop: 25 }}
+      />
 
       <p className="text-base font-semibold font-['Geist'] leading-none mb-3">
         About

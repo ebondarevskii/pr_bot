@@ -1,4 +1,4 @@
-import { Banknote as BanknoteIcon } from "@/components/icons/Banknote";
+// import { Banknote as BanknoteIcon } from "@/components/icons/Banknote";
 import { TrendingArrow as TrendingArrowIcon } from "@/components/icons/TrendingArrow";
 
 import { Badge } from "@/components/UI/badge";
@@ -17,12 +17,12 @@ export const BalanceCard = () => {
           Total Balance
         </h4>
         <Badge variant="outline">
-          <div className="flex gap-1 items-center">
+          {/* <div className="flex gap-1 items-center">
             <BanknoteIcon />
             <p className="font-['Geist'] text-xs font-semibold text-[#0A0A0A]">
               {`$1,000.00 Cash`}
             </p>
-          </div>
+          </div> */}
         </Badge>
       </div>
       <p className="text-[#0A0A0A] font-['Geist'] font-semibold text-3xl mb-6">

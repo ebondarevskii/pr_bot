@@ -43,8 +43,8 @@ export const useInit = () => {
       });
 
       setPolygonBalance(
-        balances?.tonpolygon?.usdt || "0",
-        balances?.tonpolygon?.native || "0"
+        balances?.polygon?.usdt || "0",
+        balances?.polygon?.native || "0"
       );
 
       setTonBalance(balances?.ton?.usdt || "0", balances?.ton?.native || "0");

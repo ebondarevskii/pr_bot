@@ -5,7 +5,7 @@ export type GetUserBalancesReturn = {
     nativeRaw: string | null;
     usdtRaw: string | null;
   };
-  tonpolygon: {
+  polygon: {
     native: string | null;
     usdt: string | null;
     nativeRaw: string | null;

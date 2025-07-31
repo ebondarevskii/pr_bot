@@ -11,31 +11,46 @@ import { VariantProps } from "class-variance-authority";
 import { useDepositToPrediction } from "@/hooks/useDepositToPrediction";
 import { Loader } from "@/components/icons/Loader";
 import { SuccessCircle } from "@/components/icons/SuccessCircle";
-import { usePimlicoSmartAccount } from "@/hooks/usePimlicoSmartAccount";
-import { useTonAddress } from "@tonconnect/ui-react";
-import { parseUnits } from "viem";
+// import { usePimlicoSmartAccount } from "@/hooks/usePimlicoSmartAccount";
+// import { useTonAddress } from "@tonconnect/ui-react";
+// import { parseUnits } from "viem";
+
+import { useOrder } from "@/hooks/useOrder";
+import { TPrediction } from "@/types/prediction";
 
 interface Props {
   defaultType: "yes" | "no";
+  prediction: TPrediction;
   buttonTitle?: string;
   className?: string;
 }
 
 export const BuyPrediction: React.FC<
   Props & VariantProps<typeof buttonVariants>
-> = ({ defaultType, buttonTitle = "Buy", variant = "default", className }) => {
+> = ({
+  defaultType,
+  prediction,
+  buttonTitle = "Buy",
+  variant = "default",
+  className,
+}) => {
   const [amount, setAmount] = useState<number>(0);
 
   const [open, setOpen] = useState<boolean>(false);
 
-  const { smartAccount } = usePimlicoSmartAccount();
+  const [prices, setPrices] = useState<{ yes: number; no: number }>();
+  const [clobTokens, setClobTokens] = useState<{ yes: string; no: string }>();
 
-  const tonAddress = useTonAddress();
+  // const { smartAccount } = usePimlicoSmartAccount();
 
-  const polygonAddress = smartAccount?.address || "";
+  const { getOrder } = useOrder();
+
+  // const tonAddress = useTonAddress();
+
+  // const polygonAddress = smartAccount?.address || "";
 
   const {
-    sendTransaction,
+    // sendTransaction,
     isLoading: isTxLoading,
     isSuccess: isTxSuccess,
     clearState,
@@ -57,15 +72,26 @@ export const BuyPrediction: React.FC<
     });
   };
 
-  const sendTopupTransaction = async () => {
-    sendTransaction({
-      tonAddressFrom: tonAddress,
-      polygonAddressTo: polygonAddress,
-      amountIn: parseUnits(`${amount}`, 6).toString(),
-    });
-
-    // setOpen(false);
+  const buyNo = async () => {
+    // @ts-ignore
+    getOrder({ tokenId: clobTokens?.no, price: prices?.no, side: "BUY" });
   };
+
+  const buyYes = async () => {
+    // @ts-ignore
+    getOrder({ tokenId: clobTokens?.yes, price: prices?.yes, side: "BUY" });
+  };
+
+  useEffect(() => {
+    if (prediction) {
+      const tokens = JSON.parse(prediction.clobTokenIds);
+      const tokenPrices = JSON.parse(prediction.outcomePrices);
+
+      setClobTokens({ yes: tokens?.[0], no: tokens?.[1] });
+
+      setPrices({ yes: tokenPrices?.[0], no: tokenPrices?.[1] });
+    }
+  }, [prediction]);
 
   useEffect(() => {
     if (open) {
@@ -124,10 +150,7 @@ export const BuyPrediction: React.FC<
                   <p className="text-[#737373] text-[14px] font-normal">Fees</p>
                   <p className="text-[#0A0A0A] text-[14px] font-medium">-</p>
                 </div>
-                <Button
-                  className="w-full mt-[85px]"
-                  onClick={sendTopupTransaction}
-                >
+                <Button className="w-full mt-[85px]" onClick={buyYes}>
                   Buy yes
                 </Button>
               </TabsContent>
@@ -165,10 +188,7 @@ export const BuyPrediction: React.FC<
                   <p className="text-[#0A0A0A] text-[14px] font-medium">-</p>
                 </div>
 
-                <Button
-                  className="w-full mt-[85px]"
-                  onClick={sendTopupTransaction}
-                >
+                <Button className="w-full mt-[85px]" onClick={buyNo}>
                   Buy no
                 </Button>
               </TabsContent>

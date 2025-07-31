@@ -13,6 +13,10 @@ export const Prediction = () => {
     state.predictions.find((item) => item.id === predictionId)
   );
 
+  if (!prediction) {
+    return null;
+  }
+
   return (
     <div className="overflow-scroll relative pt-[45px] w-full h-full px-2 mb-30">
       <img
@@ -120,6 +124,7 @@ export const Prediction = () => {
           defaultType="yes"
           variant="green"
           className="flex-1"
+          prediction={prediction}
         />
 
         <BuyPrediction
@@ -127,6 +132,7 @@ export const Prediction = () => {
           defaultType="no"
           variant="red"
           className="flex-1"
+          prediction={prediction}
         />
       </div>
     </div>

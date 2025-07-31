@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "../CustomButton";
+import { getFiatAmountCorrect } from "@/lib/number";
 
 interface Props {
   name: string;
@@ -30,7 +31,7 @@ export const EventCard: React.FC<Props> = ({ name, volume, imageUrl, id }) => {
             {name}
           </div>
           <div className="self-stretch justify-start text-base-muted-foreground text-sm font-normal font-['Geist'] leading-tight">
-            {`$${volume} vol`}
+            {`$${getFiatAmountCorrect(volume)} vol`}
           </div>
         </div>
         <img className="w-11 h-11 rounded-lg" src={imageUrl} />

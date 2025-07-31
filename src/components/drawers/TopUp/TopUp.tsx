@@ -3,7 +3,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../UI/tabs";
 
 import { useState } from "react";
 
-import { Button } from "@/components/UI/Button";
+import { Button, buttonVariants } from "@/components/UI/Button";
 import { Minus as MinusIcon } from "@/components/icons/Minus";
 import { Plus as PlusIcon } from "@/components/icons/Plus";
 import { getFiatAmountCorrect } from "@/lib/number";
@@ -17,8 +17,18 @@ import { useTonAddress } from "@tonconnect/ui-react";
 import { parseUnits } from "viem";
 import { SuccessCircle } from "@/components/icons/SuccessCircle";
 import { Loader } from "@/components/icons/Loader";
+import { VariantProps } from "class-variance-authority";
 
-export const TopUp = () => {
+interface Props {
+  buttonTitle?: string;
+  className?: string;
+}
+
+export const TopUp: React.FC<Props & VariantProps<typeof buttonVariants>> = ({
+  buttonTitle = "Add funds",
+  variant,
+  className,
+}) => {
   const { connectTonWallet } = useTonConnect();
 
   const [open, setOpen] = useState<boolean>(false);
@@ -82,8 +92,8 @@ export const TopUp = () => {
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild onClick={onClickButton}>
-        <Button variant="default" className="w-full mb-2">
-          Add funds
+        <Button variant={variant} className={cn("w-full mb-2", className)}>
+          {buttonTitle}
         </Button>
       </DrawerTrigger>
       <DrawerContent>

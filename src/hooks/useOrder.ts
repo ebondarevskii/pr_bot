@@ -96,7 +96,7 @@ export const useOrder = () => {
     const resp2 = await clobClient.createAndPostOrder(
       {
         tokenID: tokenId, //Use https://docs.polymarket.com/developers/gamma-markets-api/get-markets to grab a sample token
-        price: 0.1,
+        price,
         side,
         size,
         expiration: oneMinute,

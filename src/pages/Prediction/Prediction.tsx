@@ -5,18 +5,16 @@ import { BuyPrediction } from "@/components/drawers/BuyPrediction";
 import { shortAddress } from "@/lib/address";
 import { usePredictionStore } from "@/store/usePredictionStore";
 import { getFiatAmountCorrect } from "@/lib/number";
-import { useBalanceStore } from "@/store/useBalanceStore";
+// import { useBalanceStore } from "@/store/useBalanceStore";
 import { TopUp } from "@/components/drawers/TopUp";
 import { useState, useEffect } from "react";
-
 
 export const Prediction = () => {
   const { predictionId } = useParams();
 
-
   const [prices, setPrices] = useState<{ yes: number; no: number }>();
 
-  const polygonBalance = useBalanceStore((state) => state.polygonBalance);
+  // const polygonBalance = useBalanceStore((state) => state.polygonBalance);
 
   const prediction = usePredictionStore((state) =>
     state.predictions.find((item) => item.id === predictionId)
@@ -36,7 +34,6 @@ export const Prediction = () => {
   if (!prediction) {
     return null;
   }
-
 
   return (
     <div className="overflow-scroll relative pt-[45px] w-full h-full px-2 mb-30">
@@ -154,7 +151,6 @@ export const Prediction = () => {
             variant="green"
             className="flex-1"
           />
-
         )}
 
         {isHasBalance ? (
@@ -171,7 +167,6 @@ export const Prediction = () => {
             variant="red"
             className="flex-1"
           />
-
         )}
       </div>
     </div>

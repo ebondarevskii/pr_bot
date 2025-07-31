@@ -32,6 +32,8 @@ export const useOrder = () => {
 
   const embeddedWallet = wallets?.[0];
 
+  console.log("creds: ", creds);
+
   useEffect(() => {
     const getCreds = async () => {
       const provider = await embeddedWallet?.getEthereumProvider();
@@ -64,10 +66,12 @@ export const useOrder = () => {
     tokenId,
     price,
     side,
+    size,
   }: {
     tokenId: string;
     price: number;
     side: Side;
+    size: number;
   }) => {
     if (!signer) {
       return;
@@ -85,13 +89,17 @@ export const useOrder = () => {
       smartAccount?.address || ""
     );
 
+    const oneMinute = parseInt(
+      ((new Date().getTime() + 60 * 1000 + 10 * 1000) / 1000).toString()
+    );
+
     const resp2 = await clobClient.createAndPostOrder(
       {
         tokenID: tokenId, //Use https://docs.polymarket.com/developers/gamma-markets-api/get-markets to grab a sample token
-        price,
+        price: 0.1,
         side,
-        size: 5,
-        feeRateBps: 0,
+        size,
+        expiration: oneMinute,
       },
       { tickSize: "0.001", negRisk: false }, //You'll need to adjust these based on the market. Get the tickSize and negRisk T/F from the get-markets above
       //{ tickSize: "0.001",negRisk: true },

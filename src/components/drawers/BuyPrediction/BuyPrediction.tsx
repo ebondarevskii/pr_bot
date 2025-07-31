@@ -17,6 +17,7 @@ import { SuccessCircle } from "@/components/icons/SuccessCircle";
 
 import { useOrder } from "@/hooks/useOrder";
 import { TPrediction } from "@/types/prediction";
+import { Side } from "@polymarket/clob-client";
 
 interface Props {
   defaultType: "yes" | "no";
@@ -56,6 +57,8 @@ export const BuyPrediction: React.FC<
     clearState,
   } = useDepositToPrediction();
 
+  console.log("prediction: ", prediction);
+
   const onClickMinus = () => {
     setAmount((prev) => {
       if (prev === 0) {
@@ -73,13 +76,26 @@ export const BuyPrediction: React.FC<
   };
 
   const buyNo = async () => {
-    // @ts-ignore
-    getOrder({ tokenId: clobTokens?.no, price: prices?.no, side: "BUY" });
+    getOrder({
+      // @ts-ignore
+      tokenId: clobTokens?.no,
+      // @ts-ignore
+      price: prices?.no,
+      side: Side.BUY,
+      size: amount,
+    });
   };
 
   const buyYes = async () => {
     // @ts-ignore
-    getOrder({ tokenId: clobTokens?.yes, price: prices?.yes, side: "BUY" });
+    getOrder({
+      // @ts-ignore
+      tokenId: clobTokens?.yes,
+      // @ts-ignore
+      price: prices?.yes,
+      side: Side.BUY,
+      size: amount,
+    });
   };
 
   useEffect(() => {
@@ -130,7 +146,7 @@ export const BuyPrediction: React.FC<
                         !!amount && "text-[#0A0A0A]"
                       )}
                     >
-                      {`$${getFiatAmountCorrect(`${amount}`)}`}
+                      {`${getFiatAmountCorrect(`${amount}`)}`}
                     </p>
                     <p className="text-[#737373] text-[12px] font-normal leading-5">
                       Available: $1,200 USDT
@@ -167,7 +183,7 @@ export const BuyPrediction: React.FC<
                         !!amount && "text-[#0A0A0A]"
                       )}
                     >
-                      {`$${getFiatAmountCorrect(`${amount}`)}`}
+                      {`${getFiatAmountCorrect(`${amount}`)}`}
                     </p>
                     <p className="text-[#737373] text-[12px] font-normal leading-5">
                       Available: $1,200 USDT

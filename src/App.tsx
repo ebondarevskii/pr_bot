@@ -30,7 +30,7 @@ const App: React.FC = () => {
       <TonConnectUIProvider
         manifestUrl={manifestUrl}
         actionsConfiguration={{
-          twaReturnUrl: "https://t.me/mighty_hugely_bot", // важно для мини-аппов
+          twaReturnUrl: "https://t.me/predicton_tbot", // важно для мини-аппов
         }}
       >
         <TelegramAuth>
@@ -44,7 +44,7 @@ const App: React.FC = () => {
     <TonConnectUIProvider
       manifestUrl={manifestUrl}
       actionsConfiguration={{
-        twaReturnUrl: "https://t.me/mighty_hugely_bot", // важно для мини-аппов
+        twaReturnUrl: "https://t.me/predicton_tbot", // важно для мини-аппов
       }}
     >
       {/* <MainLayout user={user!} onLogout={logout} /> */}

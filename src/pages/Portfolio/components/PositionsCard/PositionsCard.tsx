@@ -123,6 +123,7 @@ export const PositionsCard = () => {
                   defaultType="yes"
                   variant="green"
                   className="flex-1"
+                  prediction={item}
                 />
 
                 <BuyPrediction
@@ -130,6 +131,7 @@ export const PositionsCard = () => {
                   defaultType="no"
                   variant="red"
                   className="flex-1"
+                  prediction={item}
                 />
               </div>
             </div>

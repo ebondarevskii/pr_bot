@@ -1,14 +1,22 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "../CustomButton";
+import { getFiatAmountCorrect } from "@/lib/number";
 
 interface Props {
   name: string;
   volume: string;
   imageUrl: string;
   id: string;
+  prices: string[];
 }
 
-export const EventCard: React.FC<Props> = ({ name, volume, imageUrl, id }) => {
+export const EventCard: React.FC<Props> = ({
+  name,
+  volume,
+  imageUrl,
+  id,
+  prices,
+}) => {
   const navigate = useNavigate();
 
   const goToPrediction = () => {
@@ -30,7 +38,7 @@ export const EventCard: React.FC<Props> = ({ name, volume, imageUrl, id }) => {
             {name}
           </div>
           <div className="self-stretch justify-start text-base-muted-foreground text-sm font-normal font-['Geist'] leading-tight">
-            {`$${volume} vol`}
+            {`$${getFiatAmountCorrect(volume)} vol`}
           </div>
         </div>
         <img className="w-11 h-11 rounded-lg" src={imageUrl} />
@@ -38,12 +46,12 @@ export const EventCard: React.FC<Props> = ({ name, volume, imageUrl, id }) => {
       <div className="self-stretch px-6 inline-flex justify-start items-start gap-2">
         <Button variant="primary">
           <div className="justify-center text-tailwind-colors-green-500 text-sm font-medium font-['Geist'] leading-tight">
-            Buy Yes 42¢
+            {`Buy Yes $${prices?.[0]}`}
           </div>
         </Button>
         <Button variant="danger">
           <div className="justify-center text-tailwind-colors-red-600 text-sm font-medium font-['Geist'] leading-tight">
-            Buy No 36¢
+            {`Buy No $${prices?.[1]}`}
           </div>
         </Button>
       </div>

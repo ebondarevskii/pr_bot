@@ -101,7 +101,7 @@ export const useOrder = () => {
         size,
         expiration: oneMinute,
       },
-      { tickSize: "0.001", negRisk: false }, //You'll need to adjust these based on the market. Get the tickSize and negRisk T/F from the get-markets above
+      { tickSize: "0.01", negRisk: false }, //You'll need to adjust these based on the market. Get the tickSize and negRisk T/F from the get-markets above
       //{ tickSize: "0.001",negRisk: true },
 
       OrderType.GTC

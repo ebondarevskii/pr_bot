@@ -7,9 +7,12 @@ import { usePredictionStore } from "@/store/usePredictionStore";
 import { getFiatAmountCorrect } from "@/lib/number";
 import { useBalanceStore } from "@/store/useBalanceStore";
 import { TopUp } from "@/components/drawers/TopUp";
+import { useState, useEffect } from "react";
 
 export const Prediction = () => {
   const { predictionId } = useParams();
+
+  const [prices, setPrices] = useState<{ yes: number; no: number }>();
 
   const polygonBalance = useBalanceStore((state) => state.polygonBalance);
 
@@ -17,7 +20,16 @@ export const Prediction = () => {
     state.predictions.find((item) => item.id === predictionId)
   );
 
-  const isHasBalance = +(polygonBalance || 0) > 0;
+  // const isHasBalance = +(polygonBalance || 0) > 0;
+  const isHasBalance = true;
+
+  useEffect(() => {
+    if (prediction) {
+      const tokenPrices = JSON.parse(prediction.outcomePrices);
+
+      setPrices({ yes: tokenPrices?.[0], no: tokenPrices?.[1] });
+    }
+  }, [prediction]);
 
   if (!prediction) {
     return null;
@@ -127,26 +139,34 @@ export const Prediction = () => {
       <div className="fixed bottom-[64px] w-[calc(100dvw-16px)] px-2 py-2.5 flex justify-between gap-2.5">
         {isHasBalance ? (
           <BuyPrediction
-            buttonTitle="Buy Yes 42¢"
+            buttonTitle={`Buy Yes $${prices?.yes}`}
             defaultType="yes"
             variant="green"
             className="flex-1"
             prediction={prediction}
           />
         ) : (
-          <TopUp buttonTitle="Buy Yes 42¢" variant="green" className="flex-1" />
+          <TopUp
+            buttonTitle={`Buy Yes $${prices?.yes}`}
+            variant="green"
+            className="flex-1"
+          />
         )}
 
         {isHasBalance ? (
           <BuyPrediction
-            buttonTitle="Buy Yes 42¢"
-            defaultType="yes"
+            buttonTitle={`Buy No $${prices?.no}`}
+            defaultType="no"
             variant="green"
             className="flex-1"
             prediction={prediction}
           />
         ) : (
-          <TopUp buttonTitle="Buy No 36¢" variant="red" className="flex-1" />
+          <TopUp
+            buttonTitle={`Buy No $${prices?.no}`}
+            variant="red"
+            className="flex-1"
+          />
         )}
       </div>
     </div>

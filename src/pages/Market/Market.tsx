@@ -31,6 +31,7 @@ export const Market = () => {
             name={item.question}
             volume={item.volume}
             imageUrl={item.image}
+            prices={JSON.parse(item.outcomePrices)}
             id={item.id}
             key={item.id}
           />

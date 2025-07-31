@@ -5,13 +5,19 @@ import { BuyPrediction } from "@/components/drawers/BuyPrediction";
 import { shortAddress } from "@/lib/address";
 import { usePredictionStore } from "@/store/usePredictionStore";
 import { getFiatAmountCorrect } from "@/lib/number";
+import { useBalanceStore } from "@/store/useBalanceStore";
+import { TopUp } from "@/components/drawers/TopUp";
 
 export const Prediction = () => {
   const { predictionId } = useParams();
 
+  const polygonBalance = useBalanceStore((state) => state.polygonBalance);
+
   const prediction = usePredictionStore((state) =>
     state.predictions.find((item) => item.id === predictionId)
   );
+
+  const isHasBalance = +(polygonBalance || 0) > 0;
 
   if (!prediction) {
     return null;
@@ -119,21 +125,29 @@ export const Prediction = () => {
       )}
 
       <div className="fixed bottom-[64px] w-[calc(100dvw-16px)] px-2 py-2.5 flex justify-between gap-2.5">
-        <BuyPrediction
-          buttonTitle="Buy Yes 42¢"
-          defaultType="yes"
-          variant="green"
-          className="flex-1"
-          prediction={prediction}
-        />
+        {isHasBalance ? (
+          <BuyPrediction
+            buttonTitle="Buy Yes 42¢"
+            defaultType="yes"
+            variant="green"
+            className="flex-1"
+            prediction={prediction}
+          />
+        ) : (
+          <TopUp buttonTitle="Buy Yes 42¢" variant="green" className="flex-1" />
+        )}
 
-        <BuyPrediction
-          buttonTitle="Buy No 36¢"
-          defaultType="no"
-          variant="red"
-          className="flex-1"
-          prediction={prediction}
-        />
+        {isHasBalance ? (
+          <BuyPrediction
+            buttonTitle="Buy Yes 42¢"
+            defaultType="yes"
+            variant="green"
+            className="flex-1"
+            prediction={prediction}
+          />
+        ) : (
+          <TopUp buttonTitle="Buy No 36¢" variant="red" className="flex-1" />
+        )}
       </div>
     </div>
   );

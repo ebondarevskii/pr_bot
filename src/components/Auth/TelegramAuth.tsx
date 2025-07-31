@@ -26,7 +26,6 @@ export const TelegramAuth: React.FC<TelegramAuthProps> = ({ children }) => {
 
   useEffect(() => {
     const tryLoginWithTelegram = async () => {
-      console.log("tet: ", authenticated);
       if (!ready || !isMiniApp || authenticated || hasLinked) return;
 
       setHasLinked(true);

@@ -82,7 +82,7 @@ export const getPolygonToTonBridgeTx = async ({
   amount,
 }: GetPolygonToTonBridgeTxParams): Promise<BridgeTx> => {
   return sendRequest<BridgeTx>({
-    url: `${apiUrl}/symbiosis/ton-to-polygon`,
+    url: `${apiUrl}/symbiosis/polygon-to-ton`,
     method: "POST",
     data: {
       tokenAmountIn: {

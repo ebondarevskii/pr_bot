@@ -5,7 +5,7 @@ import { BuyPrediction } from "@/components/drawers/BuyPrediction";
 import { shortAddress } from "@/lib/address";
 import { usePredictionStore } from "@/store/usePredictionStore";
 import { getFiatAmountCorrect } from "@/lib/number";
-// import { useBalanceStore } from "@/store/useBalanceStore";
+import { useBalanceStore } from "@/store/useBalanceStore";
 import { TopUp } from "@/components/drawers/TopUp";
 import { useState, useEffect } from "react";
 
@@ -14,14 +14,14 @@ export const Prediction = () => {
 
   const [prices, setPrices] = useState<{ yes: number; no: number }>();
 
-  // const polygonBalance = useBalanceStore((state) => state.polygonBalance);
+  const polygonBalance = useBalanceStore((state) => state.polygonBalance);
 
   const prediction = usePredictionStore((state) =>
     state.predictions.find((item) => item.id === predictionId)
   );
 
-  // const isHasBalance = +(polygonBalance || 0) > 0;
-  const isHasBalance = true;
+  const isHasBalance = +(polygonBalance || 0) > 0;
+  // const isHasBalance = true;
 
   useEffect(() => {
     if (prediction) {
@@ -143,7 +143,7 @@ export const Prediction = () => {
             defaultType="yes"
             variant="green"
             className="flex-1"
-            prediction={prediction}
+            // prediction={prediction}
           />
         ) : (
           <TopUp
@@ -159,7 +159,7 @@ export const Prediction = () => {
             defaultType="no"
             variant="green"
             className="flex-1"
-            prediction={prediction}
+            // prediction={prediction}
           />
         ) : (
           <TopUp

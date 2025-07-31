@@ -2,7 +2,7 @@
 import { TrendingArrow as TrendingArrowIcon } from "@/components/icons/TrendingArrow";
 
 import { Badge } from "@/components/UI/badge";
-import { Button } from "@/components/UI/Button";
+
 import { TopUp } from "@/components/drawers/TopUp";
 import { useBalanceStore } from "@/store/useBalanceStore";
 import { getFiatAmountCorrect } from "@/lib/number";

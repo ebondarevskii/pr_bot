@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "dev:tunnel": "concurrently \"yarn dev\" \"ngrok http --url=http://localhost:8080\"",
+    "dev:tunnel": "concurrently \"yarn dev\" \"ngrok http --url=http://localhost:3000\"",
     "build": "tsc && vite build",
     "build:optimized": "tsc && vite build",
     "preview": "vite preview",

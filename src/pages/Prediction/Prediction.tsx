@@ -4,6 +4,7 @@ import { Link as LinkIcon } from "@/components/icons/Link";
 import { BuyPrediction } from "@/components/drawers/BuyPrediction";
 import { shortAddress } from "@/lib/address";
 import { usePredictionStore } from "@/store/usePredictionStore";
+import { getFiatAmountCorrect } from "@/lib/number";
 
 export const Prediction = () => {
   const { predictionId } = useParams();
@@ -40,7 +41,7 @@ export const Prediction = () => {
               Volume
             </p>
             <p className="text-lg font-semibold font-['Geist'] leading-7 text-[#737373]">
-              {`$${prediction?.volumeNum}`}
+              {`$${getFiatAmountCorrect(`${prediction?.volumeNum || 0}`)}`}
             </p>
           </div>
         </div>

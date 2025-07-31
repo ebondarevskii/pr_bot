@@ -9,7 +9,7 @@ import { Plus as PlusIcon } from "@/components/icons/Plus";
 import { getFiatAmountCorrect } from "@/lib/number";
 import { cn } from "@/lib/utils";
 import { Lock as LockIcon } from "@/components/icons/Lock";
-import { useBridgeTonToPolygon } from "@/hooks/useBridgeTonToPolygon";
+import { useBridgePolygonToTon } from "@/hooks/useBridgePolygonToTon";
 // import { useAppStore } from "@/store/useAppStore";
 import { useTonConnect } from "@/hooks/useTonConnect";
 import { usePimlicoSmartAccount } from "@/hooks/usePimlicoSmartAccount";
@@ -18,7 +18,7 @@ import { parseUnits } from "viem";
 import { SuccessCircle } from "@/components/icons/SuccessCircle";
 import { Loader } from "@/components/icons/Loader";
 
-export const TopUp = () => {
+export const Withdraw = () => {
   const { connectTonWallet } = useTonConnect();
 
   const [open, setOpen] = useState<boolean>(false);
@@ -38,7 +38,7 @@ export const TopUp = () => {
     sendTransaction,
     isLoading: isTxLoading,
     isSuccess: isTxSuccess,
-  } = useBridgeTonToPolygon();
+  } = useBridgePolygonToTon();
 
   const onClickMinus = () => {
     setAmount((prev) => {
@@ -58,15 +58,13 @@ export const TopUp = () => {
 
   const sendTopupTransaction = async () => {
     sendTransaction({
-      tonAddressFrom: tonAddress,
-      polygonAddressTo: polygonAddress,
-      amountIn: parseUnits(`${amount}`, 6).toString(),
+      polygonAddressFrom: polygonAddress,
+      tonAddressTo: tonAddress,
+      amount: parseUnits(`${amount}`, 6).toString(),
     });
 
     // setOpen(false);
   };
-
-  console.log(tonAddress);
 
   // @ts-ignore
   const onClickButton = (e) => {
@@ -79,21 +77,26 @@ export const TopUp = () => {
     setOpen(true);
   };
 
+  const onClose = () => {
+    setOpen(false);
+  };
+
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild onClick={onClickButton}>
-        <Button variant="default" className="w-full mb-2">
-          Add funds
+        <Button variant="outline" size="default" className="w-full mb-2">
+          Withdraw
         </Button>
       </DrawerTrigger>
       <DrawerContent>
         {!isTxLoading && !isTxSuccess && (
           <div className="bg-white rounded-t-[10px] pt-[16px] px-[15px] pb-[15px]">
             <h4 className="mb-[4px] self-stretch text-center justify-start text-[#0a0a0a] text-lg font-semibold font-['Geist'] leading-none">
-              Top up your Predicton balance
+              Withdraw
             </h4>
-            <p className="mb-[66px] self-stretch text-center justify-start text-sm font-normal font-['Geist'] leading-tight text-[#737373]">
-              Minimum deposit is $2
+            <p className="mb-[66px] self-stretch text-center justify-start text-xs font-normal font-['Geist'] leading-tight text-[#737373]">
+              Minimum withdraw is $2. Funds will be sent to your TON Space
+              wallet.
             </p>
 
             <div className="flex justify-between items-center mb-[12px]">
@@ -148,7 +151,7 @@ export const TopUp = () => {
                   onClick={sendTopupTransaction}
                   disabled={isTxLoading}
                 >
-                  Top up
+                  Withdraw
                 </Button>
               </TabsContent>
               <TabsContent value="stars">
@@ -175,24 +178,29 @@ export const TopUp = () => {
               </div>
             </div>
             <h4 className="mb-[96px] mt-[16px] self-stretch text-center justify-start text-[#0a0a0a] text-lg font-semibold font-['Geist'] leading-none">
-              {isTxSuccess ? "Top up is ready" : "Top up is in progress"}
+              {isTxSuccess
+                ? "Withdraw successfully"
+                : "Withdraw is in progress"}
             </h4>
+
+            <p className="text-[#737373] text-xs font-normal leading-5">
+              Funds will sent to your TON Space wallet.
+            </p>
 
             <div className="flex-col items-center gap-[8px]">
               <p
                 className={cn(
-                  "text-[#F5F5F5] text-center text-5xl font-bold leading-12 font-['Geist']",
+                  "text-[#22C55E] text-center text-5xl font-bold leading-12 font-['Geist']",
                   !!amount && "text-[#0A0A0A]"
                 )}
               >
-                {`$${getFiatAmountCorrect(`${amount}`)}`}
+                {`- $${getFiatAmountCorrect(`${amount}`)}`}
               </p>
             </div>
 
-            <p className="mt-[8px] self-stretch text-center justify-start text-sm font-normal font-['Geist'] leading-tight text-[#737373]">
-              It can take up to 10 minutes to top up your funds. We will send
-              you notification when its ready.
-            </p>
+            <Button variant="default" size="default" onClick={onClose}>
+              Close
+            </Button>
           </div>
         )}
       </DrawerContent>

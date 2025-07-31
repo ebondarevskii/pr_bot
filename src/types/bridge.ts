@@ -1,4 +1,4 @@
-export interface TonToPolygonBridgeTx {
+export interface BridgeTx {
   fee: Fee;
   route: Route[];
   inTradeType: string;

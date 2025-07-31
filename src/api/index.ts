@@ -1,6 +1,6 @@
 import { GetUserBalancesReturn } from "@/types/api";
 import { TRequestParams } from "@/types/axios";
-import { TonToPolygonBridgeTx } from "@/types/bridge";
+import { BridgeTx } from "@/types/bridge";
 import { TPrediction } from "@/types/prediction";
 import axios, { AxiosResponse } from "axios";
 
@@ -42,8 +42,8 @@ export const getTonToPolygonBridgeTx = async ({
   tonAddressFrom,
   polygonAddressTo,
   amountIn,
-}: GetTonToPolygonBridgeTxParams): Promise<TonToPolygonBridgeTx> => {
-  return sendRequest<TonToPolygonBridgeTx>({
+}: GetTonToPolygonBridgeTxParams): Promise<BridgeTx> => {
+  return sendRequest<BridgeTx>({
     url: `${apiUrl}/symbiosis/ton-to-polygon`,
     method: "POST",
     data: {
@@ -65,6 +65,44 @@ export const getTonToPolygonBridgeTx = async ({
       },
       from: tonAddressFrom,
       to: polygonAddressTo,
+      slippage: 200,
+    },
+  });
+};
+
+export type GetPolygonToTonBridgeTxParams = {
+  polygonAddressFrom: string;
+  tonAddressTo: string;
+  amount: string;
+};
+
+export const getPolygonToTonBridgeTx = async ({
+  polygonAddressFrom,
+  tonAddressTo,
+  amount,
+}: GetPolygonToTonBridgeTxParams): Promise<BridgeTx> => {
+  return sendRequest<BridgeTx>({
+    url: `${apiUrl}/symbiosis/ton-to-polygon`,
+    method: "POST",
+    data: {
+      tokenAmountIn: {
+        address: "0x9328Eb759596C38a25f59028B146Fecdc3621Dfe",
+        amount: amount,
+        chainId: 85918,
+        decimals: 6,
+        symbol: "USDT",
+        attributes: {
+          ton: "EQCxE6mUtQJKFnGfaROTKOt1lZbDiiX1kCixRv7Nw2Id_sDs",
+        },
+      },
+      tokenOut: {
+        chainId: 137,
+        address: "0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
+        symbol: "USDT",
+        decimals: 6,
+      },
+      from: polygonAddressFrom,
+      to: tonAddressTo,
       slippage: 200,
     },
   });

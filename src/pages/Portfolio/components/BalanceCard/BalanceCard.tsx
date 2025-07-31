@@ -6,6 +6,7 @@ import { Button } from "@/components/UI/Button";
 import { TopUp } from "@/components/drawers/TopUp";
 import { useBalanceStore } from "@/store/useBalanceStore";
 import { getFiatAmountCorrect } from "@/lib/number";
+import { Withdraw } from "@/components/drawers/Withdraw";
 
 export const BalanceCard = () => {
   const userAppUsdtBalance = useBalanceStore((state) => state.polygonBalance);
@@ -41,9 +42,9 @@ export const BalanceCard = () => {
         <div className="flex-1">
           <TopUp />
         </div>
-        <Button variant="outline" size="default" className="flex-1">
-          Withdraw
-        </Button>
+        <div className="flex-1">
+          <Withdraw />
+        </div>
       </div>
     </div>
   );
